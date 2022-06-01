@@ -18,5 +18,5 @@ You'll recognize a set of folders that reappear (where applicable):
 
 Feel free to share this repo with all your coding friends! If you have any feedback that you would like to share on any of my talks, feel free to contact me:
 
-- [@noctovis on Twitter](https://twitter.com/noctovis)
-- [lailabougria on LinkedIn](linkedin.com/in/lailabougria)
+- [@noctovis on Twitter](http://twitter.com/noctovis)
+- [lailabougria on LinkedIn](http://linkedin.com/in/lailabougria)
