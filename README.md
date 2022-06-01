@@ -1,2 +1,22 @@
-# talks
-Slides, demos and additional resources for my speaking engagements.
+# Public speaking engagements
+
+Hi there! If you're visiting, that means you might have watched one of my talks, either in real life or online.
+
+Here, you'll find my slides, any code samples or demo's around the subject, as well as any additional resources that might be of interest if you'd like to expand your knowledge on the topic.
+
+## How to navigate this repo
+
+Each talk's resources is stored by name in a dedicated folder, each containing its own README file with additional information. 
+
+You'll recognize a set of folders that reappear (where applicable):
+
+- slides
+- demo
+- resources
+
+## Share the love <3
+
+Feel free to share this repo with all your coding friends! If you have any feedback that you would like to share on any of my talks, feel free to contact me:
+
+- [@noctovis on Twitter](https://twitter.com/noctovis)
+- [lailabougria on LinkedIn](linkedin.com/in/lailabougria)
