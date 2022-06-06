@@ -1,6 +1,6 @@
 # Resources
 
-I have received multiple requests for additional resources on the topics I touched on during the talk, especially regarding testing and OpenTelemetry.
+I have received multiple requests for additional resources on the topics I touched on during the talk, especially regarding OpenTelemetry.
 Here you can find a list of resources to further your understanding of these topics.
 
 ## Testing message-driven systems
