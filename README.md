@@ -8,12 +8,6 @@ Here, you'll find my slides, any code samples or demo's around the subject, as w
 
 Each talk's resources is stored by name in a dedicated folder, each containing its own README file with additional information. 
 
-You'll recognize a set of folders that reappear (where applicable):
-
-- slides
-- demo
-- resources
-
 ## Share the love <3
 
 Feel free to share this repo with all your coding friends! If you have any feedback that you would like to share on any of my talks, feel free to contact me:
