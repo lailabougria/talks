@@ -1,7 +1,7 @@
 # Resources
 
 I have received multiple requests for additional resources on the topics I touched on during the talk, especially regarding OpenTelemetry.
-Here you can find a list of resources to further your understanding of these topics.
+Here you can find a list of resources to further your understanding of these topics (I keep this list up to date with new resources I come across).
 
 ## Testing message-driven systems
 
@@ -26,3 +26,8 @@ From the OpenTelemetry .NET project and Microsoft docs:
 - [GitHub repo for the OpenTelemetry.NET project](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 There are also multiple vendors out there sharing knowledge about observability. One that stood out for me is Honeycomb. They take knowledge sharing very seriously. Their [blog](https://www.honeycomb.io/blog/) is filled with interesting articles (make sure to check out categories[ `instrumentation`](https://www.honeycomb.io/category/instrumentation/) and [`observability`](https://www.honeycomb.io/category/observability/)) that are very well explained and they conduct [webinars](https://www.honeycomb.io/type/webinar/) regularly. They've recently also released a book on Observability with O'Reilly, which is available as a [free digital download on their website](https://info.honeycomb.io/observability-engineering-oreilly-book-2022).
+
+Here you can also find some interesting blog posts:
+
+- [Jimmy's series on end-to-end-diagnostics](https://jimmybogard.com/building-end-to-end-diagnostics-and-tracing-a-primer/)
+- [An Overview of Distributed Tracing with OpenTelemetry in .NET 6 by Aaron Stannard](https://aaronstannard.com/opentelemetry-dotnet6/)
