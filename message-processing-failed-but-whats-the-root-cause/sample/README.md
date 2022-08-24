@@ -1,11 +1,11 @@
 # Sample
 
-This sample is based on the use case that was discussed during the session, a small online retail store. The sample uses [NServiceBus](https://docs.particular.net/) on top of [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) to send/publish messages/events between components.
+This sample is based on the use case that was discussed during the session, a small online retail store. The sample uses [NServiceBus](https://docs.particular.net/) on top of [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) to send/publish messages/events between components. The sample makes use of the [Microsoft Generic Host](https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host).
 
 The sample demonstrates how to:
 
-- Collect telemetry information from the Azure SDK (experimental at the time of writing) and NServiceBus
-- Forward telemetry to Azure Monitor exporter
+- Collect telemetry information from the Azure SDK (experimental at the time of writing) and NServiceBus framework
+- Forward telemetry to an Azure Monitor exporter
 - Define and use an ActivitySource to emit tracing information
 - Connect traces and logs
 
@@ -42,7 +42,7 @@ As shown in the Inventory component, in order to add custom tracing to an applic
 private static readonly ActivitySource source = new("Inventory", "1.0.0");
 ````
 
-When handling the message, information can be traced.
+When handling the message, information can be traced as follows:
 
 ``` c#
 public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
@@ -70,7 +70,12 @@ public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
 }
 ```
 
+The usage of the `using`-keyword, ensures that the activity will be stopped automatically.
+The exception is being caught to set specific tags on the activity. These tags are propagated to the exporter, and any failures will be marked as failed traces in most exporter tools. 
+
 ## Connecting traces and logs
+
+By connecting the traces and logs, each log message will have a reference to a trace id when one exists. This allows users to easily switch back and forth between log telemetry and trace telemetry.
 
 To connect traces and logs, logging needs to be configured with OpenTelemetry. When using the Microsoft.Extensions.Logging framework, OpenTelemetry can be enabled as part of the logging configuration:
 
