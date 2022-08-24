@@ -16,3 +16,7 @@ This session was presented at the following conferences and/or user groups:
 - [.NET Day Switzerland](https://dotnetday.ch/), August 30th, 2022, Zürich, Switzerland
 - [Techorama](https://techorama.nl/), October 10-12, 2022, Utrecht, Netherlands
 - [.NET DeveloperDays](https://net.developerdays.pl/), October 18-19, 2022, Warsaw, Poland
+
+## Additional information
+
+Make sure to check the additional [resources](resources) for this topic as well as the [sample](sample).
