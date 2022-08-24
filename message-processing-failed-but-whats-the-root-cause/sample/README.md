@@ -1,6 +1,6 @@
 # Sample
 
-This sample is based on the use case that was discussed during the session, a small online retail store. It uses [NServiceBus](https://docs.particular.net/) on top of [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) to send/publish messages/events between components. The sample makes use of the [Microsoft Generic Host](https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host).
+This sample showcases the use case presented during the session, a small online retail store. The sample uses [NServiceBus](https://docs.particular.net/) on top of [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) to send/publish messages/events between components. The sample makes use of the [Microsoft Generic Host](https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host).
 
 The sample demonstrates how to:
 
@@ -17,7 +17,7 @@ In the sample, I'm making use of the Microsoft.Extensions.Hosting package. By pu
  services.AddOpenTelemetryTracing(config => config
       .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("component-name"))
       .AddSource("Azure.*")
-      .AddSource("NServiceBus.Core")
+      .AddNServiceBusInstrumentation()
       .AddAzureMonitorTraceExporter(options =>
       {
           options.ConnectionString = "insert-connection-string-here";
@@ -27,16 +27,16 @@ In the sample, I'm making use of the Microsoft.Extensions.Hosting package. By pu
 
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
-Next, relevant sources from which to collect tracing information should be added. In this example, I'm collecting tracing from NServiceBus and the Azure SDK.
-At this time, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
+Relevant sources from which to collect tracing information should be added. This sample collects tracing from NServiceBus and the Azure SDK in this example.
+Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
 OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
 
-In this setup, the collected tracing information is being exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview). The `AddAzureMonitorTraceExporter`-method becomes available through the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
+In this setup, the collected tracing information is exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview). The `AddAzureMonitorTraceExporter`-method becomes available through the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
 For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
 
 ## Emitting trace information
 
-As shown in the Inventory component, in order to add custom tracing to an application, first an `ActivitySource` needs to be defined. 
+As shown in the Inventory component, in order to add custom tracing to an application, first, an `ActivitySource` needs to be defined.
 
 ``` c#
 private static readonly ActivitySource source = new("Inventory", "1.0.0");
@@ -70,8 +70,8 @@ public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
 }
 ```
 
-The usage of the `using`-keyword, ensures that the activity will be stopped automatically.
-The exception is being caught to set specific tags on the activity. These tags are propagated to the exporter, and any failures will be marked as failed traces in most exporter tools. 
+The usage of the `using`-keyword ensures that the activity is stopped automatically.
+Any exceptions are caught to set specific tags on the activity. These tags are propagated to the exporter, and any failures are marked as failed traces in most exporter tools.
 
 ## Connecting traces and logs
 
