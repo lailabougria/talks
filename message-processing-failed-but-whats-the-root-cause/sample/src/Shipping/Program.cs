@@ -6,7 +6,6 @@ using NServiceBus;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using System;
 
 const string EndpointName = "Shipping";
 
@@ -19,7 +18,7 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    services.AddOpenTelemetryTracing(config => config
                                                               .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                               // add sources to collect telemetry from
-                                                              .AddSource("NServiceBus.Core")
+                                                              .AddNServiceBusInstrumentation()
                                                               .AddSource("Azure.*")
                                                               // add exporters
                                                               .AddAzureMonitorTraceExporter(options =>
@@ -44,10 +43,10 @@ var host = Host.CreateDefaultBuilder((string[])args)
                        }).AddConsole()
                    );
                })
-               .UseNServiceBus(context =>
+               .UseNServiceBus(context => 
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
-                   endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+                   endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                    endpointConfiguration.UsePersistence<LearningPersistence>();
 
                    var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();

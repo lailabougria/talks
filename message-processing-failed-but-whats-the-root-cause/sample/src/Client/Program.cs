@@ -33,7 +33,7 @@ namespace RootCauseExample.Client
                            services.AddOpenTelemetryTracing(config => config
                                                                       .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                                       // add sources to collect telemetry from
-                                                                      .AddSource("NServiceBus.Core")
+                                                                      .AddNServiceBusInstrumentation()
                                                                       .AddSource("Azure.*")
                                                                       .AddAspNetCoreInstrumentation()
                                                                       // add exporters
@@ -62,7 +62,7 @@ namespace RootCauseExample.Client
                        .UseNServiceBus(_ =>
                        {
                            var endpointConfiguration = new EndpointConfiguration(EndpointName);
-                           endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+                           endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                            endpointConfiguration.UsePersistence<LearningPersistence>();
 
                            var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
