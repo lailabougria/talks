@@ -80,13 +80,13 @@ By connecting the traces and logs, each log message will have a reference to a t
 To connect traces and logs, logging needs to be configured with OpenTelemetry. When using the Microsoft.Extensions.Logging framework, OpenTelemetry can be enabled as part of the logging configuration:
 
 ``` c#
-services.AddLogging(builder =>
-                       builder.AddOpenTelemetry(builder =>
+ services.AddLogging(loggingBuilder =>
+                       loggingBuilder.AddOpenTelemetry(otelLoggerOptions =>
                        {
-                           builder.IncludeFormattedMessage = true;
-                           builder.IncludeScopes = true;
-                           builder.ParseStateValues = true;
-                           builder.AddConsoleExporter();
+                           otelLoggerOptions.IncludeFormattedMessage = true;
+                           otelLoggerOptions.IncludeScopes = true;
+                           otelLoggerOptions.ParseStateValues = true;
+                           otelLoggerOptions.AddConsoleExporter();
                        }).AddConsole()
                    );
 ```
