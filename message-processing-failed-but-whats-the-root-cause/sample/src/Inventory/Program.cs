@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NServiceBus;
 using NServiceBus.Extensions.Logging;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
@@ -18,7 +19,7 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    services.AddOpenTelemetryTracing(config => config
                                                               .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                               // add sources to collect telemetry from
-                                                              .AddSource("NServiceBus.Core")
+                                                              .AddNServiceBusInstrumentation()
                                                               .AddSource("Azure.*")
                                                               // add exporters
                                                               .AddAzureMonitorTraceExporter(options =>
@@ -46,7 +47,7 @@ var host = Host.CreateDefaultBuilder((string[])args)
                .UseNServiceBus(context =>
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
-                   endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+                   endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                    endpointConfiguration.UsePersistence<LearningPersistence>();
 
                    var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
