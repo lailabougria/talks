@@ -16,7 +16,7 @@ This session was presented at the following conferences and/or user groups:
 
 - [Techorama](https://techorama.be/), May 17-18, 2021, Online
 - [Clusity cloud event](https://www.clusity.be/roots-events/azure-cloud-event), September 19, 2022, Kontich, Belgium
-- [Re:factor conference](https://www.re-factor.be/), October 6th, 2022, Antwerp, Belgium
+- [Re:factor conference](https://www.re-factor.be/schedule/?firstname=laila&lastname=bougria), October 6th, 2022, Antwerp, Belgium
 
 ## Additional information
 
