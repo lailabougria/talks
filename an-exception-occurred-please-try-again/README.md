@@ -1,6 +1,6 @@
 # An exception occurred... Please try again.
 
-![try-again](try-again.jpg) 
+![try-again](try-again-banner.jpg) 
 
 ## Abstract
 
