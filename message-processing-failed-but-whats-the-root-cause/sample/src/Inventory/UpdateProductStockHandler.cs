@@ -24,6 +24,7 @@ public class UpdateProductStockHandler : IHandleMessages<UpdateProductStock>
             activity?.AddEvent(new ActivityEvent("Stock_Recalculation_Starting"));
 
             // update stock
+            // Introduces a transient exception to see how failed traces look like
             if (random.Next() % 2 == 0)
             {
                 throw new Exception("Some transient exception");
