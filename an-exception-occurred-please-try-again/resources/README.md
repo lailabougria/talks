@@ -19,7 +19,6 @@ Here you can find a list of resources to further your understanding of these top
 
 ### Retry pattern
 
-
 - [Timeouts, retries and backoff with Jitter, AWS](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
 - [Exponential backoff and jitter, AWS](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
 
