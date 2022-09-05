@@ -4,7 +4,7 @@ Here you can find a list of resources to further your understanding of these top
 
 ## Testing message-driven systems
 
-If you're using NServiceBus, to unit test message handlers and sagas, you can make use of the [testing framework](https://docs.particular.net/nservicebus/testing/) provided by the platform.
+If you're using [NServiceBus](https://docs.particular.net), to unit test message handlers and sagas, you can make use of the [testing framework](https://docs.particular.net/nservicebus/testing/) provided by the platform.
 
 To perform integration- or end-to-end testing to ensure things like the overall business process behavior and orchestration of your messages works correctly, you can use the [NServiceBus integration testing framework](https://github.com/mauroservienti/NServiceBus.IntegrationTesting) by [Mauro Servienti](https://twitter.com/mauroservienti). This framework also allows you to test concerns like endpoint configuration, message routing, subscriptions, and more. Check out [Mauro's post](https://milestone.topics.it/2019/07/04/exploring-nservicebus-integration-testing-options.html) on the topic too.
 
