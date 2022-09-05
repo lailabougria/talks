@@ -14,7 +14,7 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 
 ### CNCF OpenTelemetry project
 
-- [The specification](https://opentelemetry.io/docs/reference/specification/)
+- [The OpenTelemetry specification](https://opentelemetry.io/docs/reference/specification/)
 - [OpenTelemetry concepts](https://opentelemetry.io/docs/concepts/)
 - [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
 
@@ -35,6 +35,6 @@ There are also multiple vendors out there sharing knowledge about observability.
 
 A few noteworthy blog posts:
 
-- [Jimmy's series on end-to-end-diagnostics](https://jimmybogard.com/building-end-to-end-diagnostics-and-tracing-a-primer/)
-- [An Overview of Distributed Tracing with OpenTelemetry in .NET 6 by Aaron Stannard](https://aaronstannard.com/opentelemetry-dotnet6/)
-- [The Story of How I Wrote Another Instrumentation by Nikolay Sokolik](https://www.oxeye.io/blog/diving-into-opentelemetrys-specs)
+- [Series on end-to-end-diagnostics, by Jimmy Bogard](https://jimmybogard.com/building-end-to-end-diagnostics-and-tracing-a-primer/)
+- [An Overview of Distributed Tracing with OpenTelemetry in .NET 6, by Aaron Stannard](https://aaronstannard.com/opentelemetry-dotnet6/)
+- [The Story of How I Wrote Another Instrumentation, by Nikolay Sokolik](https://www.oxeye.io/blog/diving-into-opentelemetrys-specs)
