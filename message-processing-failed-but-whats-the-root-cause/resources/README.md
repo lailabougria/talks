@@ -26,8 +26,8 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 
 ### Books
 
-- [Cloud-native observability with OpenTelemetry](https://www.amazon.com/dp/1801077703)
-- [Observability Engineering: Achieving Production Excellence](https://www.amazon.com/dp/1492076449)
+- [Cloud-native observability with OpenTelemetry, by Alex Boten](https://www.amazon.com/dp/1801077703)
+- [Observability Engineering: Achieving Production Excellence, by Charity Majors, Liz Fong-Jones, George Miranda](https://www.amazon.com/dp/1492076449)
 
 ### Blogs
 
