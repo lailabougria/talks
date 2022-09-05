@@ -1,6 +1,6 @@
 # Resources
 
-Here you can find a list of resources to further your understanding of these topics (I keep this list up to date with new resources I come across).
+Here you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
 ## Testing message-driven systems
 
