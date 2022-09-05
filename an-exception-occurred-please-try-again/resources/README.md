@@ -4,21 +4,20 @@ Here you can find a list of resources to further your understanding of these top
 
 ## About exceptions
 
-- [But, all my errors are sever, by David Boike, Particular Software](https://particular.net/blog/but-all-my-errors-are-severe)
+- [But, all my errors are severe, by David Boike, Particular Software](https://particular.net/blog/but-all-my-errors-are-severe)
 - [Transient fault guidance, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/best-practices/transient-faults)
 - [Rate limiting pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern)
 - [Throttling, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/throttling)
 
 ## Resilience patterns
 
+The following resources document several resilience patterns that can be applied in software. Each provides its own value, and ideally, multiple resilience patterns are applied to software simultaneously. 
+
 - [Async request-reply, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
 - [Publish-subscribe, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber)
 - [Retry pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/retry)
 - [Circuit breaker pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
 - [Avoiding fallback in distributed systems, AWS](https://aws.amazon.com/builders-library/avoiding-fallback-in-distributed-systems/)
-
-### Retry pattern
-
 - [Timeouts, retries and backoff with Jitter, AWS](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
 - [Exponential backoff and jitter, AWS](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
 
