@@ -6,6 +6,7 @@ For more information on how to use NServiceBus, check out the [quickstart](https
 This sample demonstrates how to:
 
 - Define a custom recoverability policy in NServiceBus
+- A jittered exponential back-off retry mechanism
 - A simple implementation of a randomized exponential back-off retry mechanism
 
 ## Defining a custom recoverability policy
@@ -26,9 +27,33 @@ recoverablility.Delayed(
 recoverablility.CustomPolicy(CustomRecoverability.RandomizedIncrementalBackOff);
 ```
 
-## Creating a custom recoverability policy
+## Jittered exponential back-off retry mechanism
+
+This sample applies the default recoverability policy, in this case, an exponential time increase of 2 seconds based on the number of retries performed. Before returning, it will add some jitter to the delay, to avoid retries to be scheduled at the same time.
+Please note that this sample illustrates how Jitter could work. There are [sophisticated Jitter algorithms](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) available that are more fit for production environments with high throughput.
+
+```c#
+static Random Jitterer = new Random();
+
+public static RecoverabilityAction JitteredIncrementalBackOff(RecoverabilityConfig recoverabilityConfig, ErrorContext errorContext)
+{
+    var action = DefaultRecoverabilityPolicy.Invoke(recoverabilityConfig, errorContext);
+    if (!(action is DelayedRetry))
+    {
+        // This policy only customizes DelayedRetries, so falling back to the default policy here
+        return action;
+    }
+
+    var delay = TimeSpan.FromTicks(recoverabilityConfig.Delayed.TimeIncrease.Ticks * (errorContext.DelayedDeliveriesPerformed + 1));
+    var jitteredDelay = delay + TimeSpan.FromMilliseconds(Jitterer.Next(0, 1000));
+    return RecoverabilityAction.DelayedRetry(jitteredDelay);
+}
+```
+
+## A randomized exponential back-off retry mechanism
 
 The following example showcases a simple implementation that allows for full customization of the back-off time based on the amount of retries performed.
+Please note that this example showcases an overly simplified solution for sample-purposes. 
 
 First, it defines a dictionary that stored the range in seconds to apply per retry attempt:
 
