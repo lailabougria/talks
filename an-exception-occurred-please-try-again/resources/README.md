@@ -2,6 +2,12 @@
 
 Here you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
+## Fallacies of distributed computing
+
+- [Fallacies of distributed computing on Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing)
+- [The network is reliable, by Udi Dahan](https://www.youtube.com/watch?v=8fRzZtJ_SLk)
+- [Distributed Systems Design Fundementals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
+
 ## About exceptions
 
 - [But, all my errors are severe, by David Boike, Particular Software](https://particular.net/blog/but-all-my-errors-are-severe)
