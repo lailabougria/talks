@@ -42,4 +42,6 @@ The following resources document several resilience patterns that can be applied
 ### Messaging services in the Azure Stack
 
 - [Overview of available messaging services on Azure, Microsoft docs](https://azure.microsoft.com/en-us/solutions/messaging-services/#products)
+- [Azure Storage Queues vs Azure Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-azure-and-service-bus-queues-compared-contrasted)
+- [Event Grid vs Event Hubs vs and Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/event-grid/compare-messaging-services)
 - [List of retry capabilities per Azure service, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/best-practices/retry-service-specific)
