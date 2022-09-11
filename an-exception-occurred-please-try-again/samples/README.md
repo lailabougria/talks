@@ -30,7 +30,8 @@ recoverablility.CustomPolicy(CustomRecoverability.RandomizedIncrementalBackOff);
 ## Jittered exponential back-off retry mechanism
 
 This sample applies the default recoverability policy, in this case, an exponential time increase of 2 seconds based on the number of retries performed. Before returning, it will add some jitter to the delay, to avoid retries to be scheduled at the same time.
-Please note that this sample illustrates how Jitter could work. There are [sophisticated Jitter algorithms](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) available that are more fit for production environments with high throughput.
+
+> **_NOTE:_** This sample illustrates a simplified way to add Jitter. There are [sophisticated Jitter algorithms](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) available that are better fit for production environments with high throughput.
 
 ```c#
 static Random Jitterer = new Random();
@@ -53,7 +54,8 @@ public static RecoverabilityAction JitteredIncrementalBackOff(RecoverabilityConf
 ## A randomized exponential back-off retry mechanism
 
 The following example showcases a simple implementation that allows for full customization of the back-off time based on the amount of retries performed.
-Please note that this example showcases an overly simplified solution for sample-purposes. 
+
+> **_NOTE:_**  This example showcases an overly simplified solution for sample-purposes. 
 
 First, it defines a dictionary that stored the range in seconds to apply per retry attempt:
 
