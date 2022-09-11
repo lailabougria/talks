@@ -6,7 +6,7 @@ Here you can find a list of resources to further your understanding of these top
 
 - [Fallacies of distributed computing on Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing)
 - [The network is reliable, by Udi Dahan](https://www.youtube.com/watch?v=8fRzZtJ_SLk)
-- [Distributed Systems Design Fundementals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
+- [Distributed Systems Design Fundamentals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
 
 ## About exceptions
 
