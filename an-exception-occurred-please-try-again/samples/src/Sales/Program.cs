@@ -35,7 +35,7 @@ namespace Sales
                                    delayed.TimeIncrease(TimeSpan.FromSeconds(2));
                                }
                            );
-                           recoverablility.CustomPolicy(CustomRecoverability.RandomizedIncrementalBackOff);
+                           recoverablility.CustomPolicy(JitterRecoverability.JitteredIncrementalBackOff);
 
                            return endpointConfiguration;
                        });
