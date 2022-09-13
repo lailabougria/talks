@@ -48,7 +48,7 @@ public static RecoverabilityAction JitteredIncrementalBackOff(RecoverabilityConf
 }
 ```
 
-PS: There's an [issue on the NServiceBus repo for out-of-the-box Jitter support](https://github.com/Particular/NServiceBus/issues/6534). Feel free to go give it a thumbs up ;-)
+PS: There's an [issue on the NServiceBus repo for out-of-the-box Jitter support](https://github.com/Particular/NServiceBus/issues/6534). Feel free to go give it a thumbs up :wink:
 
 ## Considerations when applying custom retry strategies
 
