@@ -1,6 +1,6 @@
 # Samples
 
-This sample showcases how to build a retry policy with a randomized back-off time. The sample uses [NServiceBus](https://docs.particular.net/) on top of the [NServiceBus Learning transport](https://docs.particular.net/transports/learning/) which simulates queuing infrastructure by storing all message actions in the local file system.
+This sample showcases how to build a retry policy with a randomized back-off time when using [NServiceBus](https://docs.particular.net/). The sample uses the [NServiceBus Learning transport](https://docs.particular.net/transports/learning/) which simulates queuing infrastructure by storing all message actions in the local file system.
 For more information on how to use NServiceBus, check out the [quickstart](https://docs.particular.net/tutorials/quickstart/).
 
 This sample demonstrates how to:
