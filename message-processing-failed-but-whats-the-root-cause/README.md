@@ -14,6 +14,7 @@ This session was presented at the following conferences and/or user groups:
 
 - [Techorama](https://techorama.be/), May 23-25, 2022, Antwerp, Belgium
 - [.NET Day Switzerland](https://dotnetday.ch/), August 30th, 2022, Zürich, Switzerland
+- [Full Stack Europe](https://fullstackeurope.com/2022/speakers/laila-bougria), October 6-7, Antwerp, Belgium
 - [Techorama](https://techorama.nl/), October 10-12, 2022, Utrecht, Netherlands
 - [.NET DeveloperDays](https://net.developerdays.pl/), October 18-19, 2022, Warsaw, Poland
 - [JetBrains .NET Days Online](https://pages.jetbrains.com/dotnet-days-2022), October 26-27, Online
