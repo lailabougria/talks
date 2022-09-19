@@ -6,7 +6,7 @@ Here you can find a list of resources to further your understanding of these top
 
 - [Fallacies of distributed computing on Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing)
 - [The network is reliable, by Udi Dahan](https://www.youtube.com/watch?v=8fRzZtJ_SLk)
-- [Distributed Systems Design Fundementals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
+- [Distributed Systems Design Fundamentals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
 
 ## About exceptions
 
@@ -42,4 +42,6 @@ The following resources document several resilience patterns that can be applied
 ### Messaging services in the Azure Stack
 
 - [Overview of available messaging services on Azure, Microsoft docs](https://azure.microsoft.com/en-us/solutions/messaging-services/#products)
+- [Azure Storage Queues vs Azure Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-azure-and-service-bus-queues-compared-contrasted)
+- [Event Grid vs Event Hubs vs and Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/event-grid/compare-messaging-services)
 - [List of retry capabilities per Azure service, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/best-practices/retry-service-specific)
