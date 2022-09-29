@@ -33,11 +33,14 @@ The following resources document several resilience patterns that can be applied
 
 - [Polly](http://www.thepollyproject.org/)
 - [Polly GitHub repo](https://github.com/App-vNext/Polly#resilience-policies)
+- [Polly WaitAndRetry Contrib](https://github.com/Polly-Contrib/Polly.Contrib.WaitAndRetry)
 
 ### NServiceBus
 
 - [NServiceBus quickstart](https://docs.particular.net/tutorials/quickstart)
 - [NServiceBus recoverability](https://docs.particular.net/nservicebus/recoverability/)
+- [NServiceBus Outbox](https://docs.particular.net/nservicebus/outbox/)
+- [NServiceBus transactional session](https://docs.particular.net/nservicebus/transactional-session/)
 
 ### Messaging services in the Azure Stack
 
