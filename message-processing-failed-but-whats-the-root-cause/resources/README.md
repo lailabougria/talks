@@ -21,6 +21,9 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 ### .NET OpenTelemetry project
 
 - [Distributed tracing concepts](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts)
+- [OpenTelemetry .NET tracing - Getting started](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/getting-started)
+- [Customizing OpenTelemetry .NET SDK](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/customizing-the-sdk)
+- [How to report exceptions](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/reporting-exceptions)
 - [OpenTelemetry with Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview)
 - [GitHub repo for the OpenTelemetry.NET project](https://github.com/open-telemetry/opentelemetry-dotnet)
 
