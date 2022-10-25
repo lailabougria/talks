@@ -18,7 +18,7 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 - [OpenTelemetry concepts](https://opentelemetry.io/docs/concepts/)
 - [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
 
-### .NET OpenTelemetry project
+### OpenTelemetry .NET SDK
 
 - [Distributed tracing concepts](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts)
 - [OpenTelemetry .NET tracing - Getting started](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/getting-started)
