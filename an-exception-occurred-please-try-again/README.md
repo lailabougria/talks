@@ -20,4 +20,4 @@ This session was presented at the following conferences and/or user groups:
 
 ## Additional information
 
-Make sure to check the additional [resources](resources) for this topic.
+Make sure to check the additional [resources](resources) and the [samples](samples) for this topic.
