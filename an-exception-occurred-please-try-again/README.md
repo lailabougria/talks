@@ -19,6 +19,8 @@ This session was presented at the following conferences and/or user groups:
 - [Re:factor conference](https://www.re-factor.be/schedule/?firstname=laila&lastname=bougria), October 6th, 2022, Antwerp, Belgium
 - [Particular Software Webinar](https://particular.net/webinars/an-exception-occurred-please-try-again), November 15th, 2022, Online
 
+A recording of this talk at Particular Software is available on [their YouTube channel](https://www.youtube.com/watch?v=gSQxtgw1Qz4).
+
 ## Additional information
 
 Make sure to check the additional [resources](resources) and the [samples](samples) for this topic.
