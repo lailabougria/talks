@@ -11,3 +11,10 @@ Distributed systems are becoming increasingly common in today's systems landscap
 - How do I diagnose problems in a distributed system?
 
 To address these challenges, we will discuss best practices for designing and implementing messaging in a distributed system, including techniques for ensuring reliability, consistency, and decoupling. We will also consider the unknown unknowns of distributed systems, and how to prepare for and mitigate potential issues that may arise. By the end of this session, you will have a comprehensive understanding of the challenges and pitfalls of using messaging in distributed systems, and will be better equipped to make informed decisions about whether and how to incorporate messaging into your systems.
+
+
+## Shorter version
+
+Distributed systems are becoming increasingly common in today's systems landscape, and messaging is often used to safely facilitate communication and coordination between components in these systems. The benefits of using messaging are numerous, including increased reliability, better performance, easy scalability, and simpler decoupling of components, at which point you might think "Shut up and take my money!". However, as with any architectural choice, the other side of the coin surfaces challenges and pitfalls that must be considered: diagnosing problems, understanding the state of the system, handling duplicate messages, idempotency, and a plethora of unknown unknowns.
+
+To address these challenges, we will discuss best practices for designing and implementing messaging in a distributed system, including techniques for ensuring reliability, consistency, and decoupling. We will also consider the unknown unknowns of distributed systems, and how to prepare for and mitigate potential issues that may arise. By the end of this session, you will have a comprehensive understanding of the challenges and pitfalls of using messaging in distributed systems, and will be better equipped to make informed decisions about whether and how to incorporate messaging into your systems.
