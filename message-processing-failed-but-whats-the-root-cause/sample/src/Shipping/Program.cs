@@ -18,7 +18,7 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    services.AddOpenTelemetryTracing(config => config
                                                               .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                               // add sources to collect telemetry from
-                                                              .AddNServiceBusInstrumentation()
+                                                              .AddSource("NServiceBus.*")
                                                               .AddSource("Azure.*")
                                                               // add exporters
                                                               .AddAzureMonitorTraceExporter(options =>

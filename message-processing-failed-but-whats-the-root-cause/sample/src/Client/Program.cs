@@ -33,7 +33,7 @@ namespace RootCauseExample.Client
                            services.AddOpenTelemetryTracing(config => config
                                                                       .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                                       // add sources to collect telemetry from
-                                                                      .AddNServiceBusInstrumentation()
+                                                                      .AddSource("NServiceBus.*")
                                                                       .AddSource("Azure.*")
                                                                       .AddAspNetCoreInstrumentation()
                                                                       // add exporters
