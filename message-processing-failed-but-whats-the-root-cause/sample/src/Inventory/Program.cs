@@ -2,9 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NServiceBus;
 using NServiceBus.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -16,10 +17,18 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    // Enables capturing OpenTelemetry from the Azure SDK
                    AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 
+                   Sdk.CreateMeterProviderBuilder()
+                      .AddMeter("NServiceBus.Core")
+                      .AddAzureMonitorMetricExporter(options =>
+                      {
+                          options.ConnectionString = "insert-connection-string-here";
+                      })
+                      .Build();
+
                    services.AddOpenTelemetryTracing(config => config
                                                               .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
                                                               // add sources to collect telemetry from
-                                                              .AddNServiceBusInstrumentation()
+                                                              .AddSource("NServiceBus.*")
                                                               .AddSource("Azure.*")
                                                               // add exporters
                                                               .AddAzureMonitorTraceExporter(options =>
@@ -59,6 +68,7 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    transport.ConnectionString(connectionString);
 
                    endpointConfiguration.EnableInstallers();
+                   endpointConfiguration.EnableOpenTelemetry();
 
                    var loggerFactory = LoggerFactory.Create(builder => builder.AddOpenTelemetry(_ => {}));
                    NServiceBus.Logging.ILoggerFactory nservicebusLoggerFactory = new ExtensionsLoggerFactory(loggerFactory);
