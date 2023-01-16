@@ -17,12 +17,18 @@ In the sample, I'm making use of the Microsoft.Extensions.Hosting package. By pu
  services.AddOpenTelemetryTracing(config => config
       .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("component-name"))
       .AddSource("Azure.*")
-      .AddNServiceBusInstrumentation()
+      .AddSource("NServiceBus.*")
       .AddAzureMonitorTraceExporter(options =>
       {
           options.ConnectionString = "insert-connection-string-here";
       })
 );
+```
+
+To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
+
+``` c#
+endpointConfiguration.EnableOpenTelemetry();
 ```
 
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
