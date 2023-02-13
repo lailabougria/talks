@@ -1,0 +1,7 @@
+﻿# The Tech Decision Compass: Navigating a sea of possibilities
+
+## Abstract
+
+Do you ever feel like you're swimming in a sea of technological possibilities without a compass to guide you? Or perhaps you've built a system with all the latest and greatest technologies, only to find it's more complicated than an 8-cube? I know I have. As tech professionals, we face an abundance of technologies, frameworks, architectural styles, and patterns to choose from, but this abundance of options can lead to biased decision-making, where we choose solutions based on other's success stories neglecting their context or our eagerness to learn, also known as "resume-driven-development". This can result in overly complicated solutions that don't fit the problem at hand, treating every problem like a hammer in search of a nail.
+
+In this session, I'll share my experiences and insights on which pillars improve critical thinking, help break through biases, and improve our intent and communication when making impactful decisions. You'll learn to ask the right questions and apply tactics to help identify assumptions, evaluate options objectively, and assess risk. By the end of the session, you'll clearly understand the key elements of good decision-making and will be better equipped to navigate our complex and ever-changing digital landscape confidently. So, bring your life jacket and join me on this journey to better decision-making in tech.
