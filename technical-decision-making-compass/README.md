@@ -1,4 +1,4 @@
-﻿# The Tech Decision Compass: Navigating a sea of possibilities
+﻿# Building a technical decision-making compass
 
 ## Abstract
 
