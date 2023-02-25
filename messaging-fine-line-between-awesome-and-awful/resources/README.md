@@ -36,8 +36,18 @@ For additional resources regarding observability and OpenTelemetry, refer to my 
 
 ## Further reading
 
-- [Outbox: what and why, Mauro Servienti](https://milestone.topics.it/2023/02/07/outbox-what-and-why.html)
+### Sessions
+
+- [Finding your service boundaries, by Adam Ralph](https://www.youtube.com/watch?v=tVnIUZbsxWI)
+- [Got the time?, by Maruo Servienti](https://particular.net/webinars/got-the-time)
+
+### Blog posts
+
 - [The pitfalls of request/response over messaging, Mauro Servienti](https://milestone.topics.it/2023/01/19/pitfalls-of-request-response-over-messaging.html)
 - [Let's get logical! On logical and physical architectural views, Mauro Servienti](https://milestone.topics.it/2022/01/25/lets-get-logical.html)
 - [You don't need ordered delivery, Particular blog](https://particular.net/blog/you-dont-need-ordered-delivery)
+- [Outbox: what and why, Mauro Servienti](https://milestone.topics.it/2023/02/07/outbox-what-and-why.html)
+
+### Books
+
 - [Software Architecture: the hard parts, by Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/)
