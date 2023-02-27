@@ -1,4 +1,4 @@
-# Decision-making is hard, how about a compass to guide you?
+# Decision-making in tech is hard, how about a compass to guide you?
 
 ## Abstract
 
