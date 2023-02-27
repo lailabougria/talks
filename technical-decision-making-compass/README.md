@@ -1,4 +1,4 @@
-# Find north with a technical decision-making compass
+# Find true north with a technical decision-making compass
 
 ## Abstract
 
