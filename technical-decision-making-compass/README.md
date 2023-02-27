@@ -1,4 +1,4 @@
-# Decision-making in tech is hard, how about a compass to guide you?
+# Find north with a technical decision-making compass
 
 ## Abstract
 
