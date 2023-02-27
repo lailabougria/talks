@@ -1,4 +1,4 @@
-# Aiming for true north: Building a technical decision-making compass
+# Decision-making is hard, how about a compass to guide you?
 
 ## Abstract
 
