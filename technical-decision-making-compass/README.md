@@ -1,4 +1,4 @@
-# Building a technical decision-making compass
+# Let's build a technical decision-making compass
 
 ## Abstract
 
