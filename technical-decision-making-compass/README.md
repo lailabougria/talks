@@ -1,4 +1,4 @@
-# Aiming for True North: Building a Technical Decision-Making Compass
+# Aiming for true north: Building a technical decision-making compass
 
 ## Abstract
 
