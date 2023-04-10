@@ -5,13 +5,8 @@ Here you can find a list of resources to further your understanding of these top
 
 ### Books
 
+
 - [Distributed tracing in practice, by Austin Parker, Daniel Spoonhower, Jonathan Mace, Ben Sigelman, Rebecca Isaacs](https://www.amazon.com/Distributed-Tracing-Practice-Instrumenting-Microservices/dp/1492056634)
-
-This book is a thorough guide into distributed tracing, but also covers metrics and logging, although the main focus is on tracing. This book is not specifically focussed on OpenTelemetry, but rather discusses a wider range of possibilities. Considering the backgrounds of these authors, you can't get better insights than these!
-
-- [Distributed Tracing in practice]()
-- []()
-- []()
 - [Cloud-native observability with OpenTelemetry, by Alex Boten](https://www.amazon.com/dp/1801077703)
 - [Observability Engineering: Achieving Production Excellence, by Charity Majors, Liz Fong-Jones, George Miranda](https://www.amazon.com/dp/1492076449)
 
