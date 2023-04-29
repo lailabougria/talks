@@ -11,7 +11,7 @@ Here you can find a list of resources to further your understanding of these top
 
 ### Blogs
 
-This is a collection of noteworthy blogposts connected to the session that are good further reads:
+The following blog posts are good further reading material connected to the session:
 
 - [The best and worst reasons to adopt OpenTelemetry](https://devops.com/the-best-and-worst-reasons-to-adopt-opentelemetry/)
 - [OpenTelemetry Moves Past the Three Pillars](https://dzone.com/articles/opentelemetry-moves-past-the-three-pillars)
