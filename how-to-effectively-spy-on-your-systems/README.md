@@ -1,5 +1,7 @@
 # How to effectively spy on your systems
 
+![spy(spy-banner.jpg)
+
 ## Abstract
 
 OpenTelemetry is a rapidly growing standard for distributed tracing, logging, and metrics and is quickly achieving its purpose of becoming an industry-wide embraced standard. The early adoption within the .NET ecosystem, has made it a breeze to use in your applications. But larger, more complex systems, introduce challenges that require us to strengthen our understanding of observability and the capabilities of the OpenTelemetry specification.
