@@ -28,3 +28,4 @@ This is a collection of noteworthy blogposts connected to the session that are g
 - [OpenTelemetry Collector Architecture](https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md)
 - [Adding Azure Attributes to OpenTelemetry Spans](https://martinjt.me/2022/10/07/adding-azure-attributes-to-opentelemetry-spans/)
 - [OpenTelemetry Log Data Model](https://opentelemetry.io/docs/reference/specification/logs/data-model/)
+- [What are cardinality spikes and why do they matter?](https://grafana.com/blog/2022/02/15/what-are-cardinality-spikes-and-why-do-they-matter/)
