@@ -6,7 +6,7 @@ Here you can find a list of resources to further your understanding of these top
 ### Books
 
 - [Distributed tracing in practice, by Austin Parker, Daniel Spoonhower, Jonathan Mace, Ben Sigelman, Rebecca Isaacs](https://www.amazon.com/Distributed-Tracing-Practice-Instrumenting-Microservices/dp/1492056634)
-- [Cloud-native observability with OpenTelemetry, by Alex Boten](https://www.amazon.com/dp/1801077703)
+- [Cloud Observability in Action, Michael Hausenblas](https://www.manning.com/books/cloud-observability-in-action/)
 - [Observability Engineering: Achieving Production Excellence, by Charity Majors, Liz Fong-Jones, George Miranda](https://www.amazon.com/dp/1492076449)
 
 ### Blogs
@@ -23,3 +23,4 @@ This is a collection of noteworthy blogposts connected to the session that are g
 - [Adding Azure Attributes to OpenTelemetry Spans](https://martinjt.me/2022/10/07/adding-azure-attributes-to-opentelemetry-spans/)
 - [OpenTelemetry Log Data Model](https://opentelemetry.io/docs/reference/specification/logs/data-model/)
 - [What are cardinality spikes and why do they matter?](https://grafana.com/blog/2022/02/15/what-are-cardinality-spikes-and-why-do-they-matter/)
+- [High cardinality, Honeycomb](https://docs.honeycomb.io/concepts/high-cardinality/)
