@@ -1,6 +1,6 @@
 # How to effectively spy on your systems
 
-![spy(spy-banner.jpg)
+![spy](spy-banner.jpg)
 
 ## Abstract
 
