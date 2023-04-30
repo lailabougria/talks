@@ -14,7 +14,8 @@ This session was presented at the following conferences and/or user groups:
 
 - [.NET Zuid](https://www.dotnetzuid.nl/Meeting/60/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it), February 27, 2023, Eindhoven, The Netherlands
 - [DDD SoCal](https://www.meetup.com/ddd-socal/events/291671819/), March 15, 2023, Online
-- [Techorama](https://techorama.be/), May 15-17, 2023, Antwerp, Belgium
+- [Techorama](https://techorama.be/agenda/session/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), May 15-17, 2023, Antwerp, Belgium
+- [DDD Europe](https://2023.dddeurope.com/program/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), May 15-17, 2023, Antwerp, Belgium
 
 ## Additional information
 
