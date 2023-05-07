@@ -24,11 +24,12 @@ Here you can find a list of resources to further your understanding of these top
 - [Delay queues in Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html)
 - [Delayed delivery support in NServiceBus](https://docs.particular.net/nservicebus/messaging/delayed-delivery)
 
-### Message deduplication
+### Message deduplication & idempotency
 
 - [Message deduplication in Azure Service Bus](https://learn.microsoft.com/en-us/azure/service-bus-messaging/duplicate-detection)
 - [Message deduplication in Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html)
 - [Message deduplication in NServiceBus with Outbox](https://docs.particular.net/nservicebus/outbox/)
+- [Idempotent message processing, Azure Architecture Center](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/containers/aks-mission-critical/mission-critical-data-platform#idempotent-message-processing)
 
 ## Observability
 
