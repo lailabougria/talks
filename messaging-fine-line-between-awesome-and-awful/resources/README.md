@@ -1,4 +1,4 @@
-﻿# Resources
+# Resources
 
 Here you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
@@ -32,14 +32,16 @@ Here you can find a list of resources to further your understanding of these top
 
 ## Observability
 
-For additional resources regarding observability and OpenTelemetry, refer to my dedicated talk [Message processing failed, but what's the root cause?](../../message-processing-failed-but-whats-the-root-cause) which includes a recording and additional resources as well.
+I have two dedicated talks about observability and OpenTelemetry, including additional resources:
+- [Message processing failed, but what's the root cause?](../../message-processing-failed-but-whats-the-root-cause)
+- [How to effectively spy on your systems](../../how-to-effectively-spy-on-your-systems)
 
 ## Further reading
 
 ### Sessions
 
 - [Finding your service boundaries, by Adam Ralph](https://www.youtube.com/watch?v=tVnIUZbsxWI)
-- [Got the time?, by Maruo Servienti](https://particular.net/webinars/got-the-time)
+- [Got the time?, by Mauro Servienti](https://particular.net/webinars/got-the-time)
 
 ### Blog posts
 
