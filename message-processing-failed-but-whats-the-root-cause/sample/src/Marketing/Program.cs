@@ -16,30 +16,26 @@ var host = Host.CreateDefaultBuilder((string[])args)
                    // Enables capturing OpenTelemetry from the Azure SDK
                    AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 
-                   Sdk.CreateMeterProviderBuilder()
-                      .AddMeter("NServiceBus.Core")
-                      .AddAzureMonitorMetricExporter(options =>
-                      {
-                          options.ConnectionString = "insert-connection-string-here";
-                      })
-                      .Build();
-
-                   services.AddOpenTelemetryTracing(config => config
-                                                              .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(EndpointName))
-                                                              // add sources to collect telemetry from
-                                                              .AddSource("NServiceBus.*")
-                                                              .AddSource("Azure.*")
-                                                              // add exporters
-                                                              .AddAzureMonitorTraceExporter(options =>
-                                                              {
-                                                                  options.ConnectionString = "insert-connection-string-here";
-                                                              })
-                                                              .AddJaegerExporter(c =>
-                                                              {
-                                                                  c.AgentHost = "localhost";
-                                                                  c.AgentPort = 6831;
-                                                              })
-                   );
+                   var otelBuilder = services.AddOpenTelemetry();
+                   otelBuilder.ConfigureResource(_ => ResourceBuilder.CreateDefault().AddService(EndpointName));
+                   otelBuilder.WithTracing(builder => builder
+                                                      .AddSource("NServiceBus.*")
+                                                      .AddSource("Azure.*")
+                                                      .AddAzureMonitorTraceExporter(options =>
+                                                      {
+                                                          options.ConnectionString = "insert-connection-string-here";
+                                                      })
+                                                      .AddJaegerExporter(c =>
+                                                      {
+                                                          c.AgentHost = "localhost";
+                                                          c.AgentPort = 6831;
+                                                      }));
+                   otelBuilder.WithMetrics(builder => builder
+                                                      .AddMeter("NServiceBus.Core")
+                                                      .AddAzureMonitorMetricExporter(options =>
+                                                      {
+                                                          options.ConnectionString = "insert-connection-string-here";
+                                                      }));
 
                    // connect traces with logs
                    services.AddLogging(loggingBuilder =>
