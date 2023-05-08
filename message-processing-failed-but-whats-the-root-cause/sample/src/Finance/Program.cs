@@ -2,9 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry;
 using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -16,26 +14,27 @@ var host = Host.CreateDefaultBuilder(args)
                    // Enables capturing OpenTelemetry from the Azure SDK
                    AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 
-                   var otelBuilder = services.AddOpenTelemetry();
-                   otelBuilder.ConfigureResource(_ => ResourceBuilder.CreateDefault().AddService(EndpointName));
-                   otelBuilder.WithTracing(builder => builder
-                                                      .AddSource("NServiceBus.*")
-                                                      .AddSource("Azure.*")
-                                                      .AddAzureMonitorTraceExporter(options =>
-                                                      {
-                                                          options.ConnectionString = "insert-connection-string-here";
-                                                      })
-                                                      .AddJaegerExporter(c =>
-                                                      {
-                                                          c.AgentHost = "localhost";
-                                                          c.AgentPort = 6831;
-                                                      }));
-                   otelBuilder.WithMetrics(builder => builder
-                                                      .AddMeter("NServiceBus.Core")
-                                                      .AddAzureMonitorMetricExporter(options =>
-                                                      {
-                                                          options.ConnectionString = "insert-connection-string-here";
-                                                      }));
+                   var appInsightsConnString = Environment.GetEnvironmentVariable("AppInsights_ConnectionString");
+                   services.AddOpenTelemetry()
+                           .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                           .WithTracing(tracingBuilder => tracingBuilder
+                                                          .AddSource("NServiceBus.Core")
+                                                          .AddSource("Azure.*")
+                                                          .AddAzureMonitorTraceExporter(options =>
+                                                          {
+                                                              options.ConnectionString = appInsightsConnString;
+                                                          })
+                                                          .AddJaegerExporter(c =>
+                                                          {
+                                                              c.AgentHost = "localhost";
+                                                              c.AgentPort = 6831;
+                                                          }))
+                           .WithMetrics(metricsBuilder => metricsBuilder
+                                                          .AddMeter("NServiceBus.Core")
+                                                          .AddAzureMonitorMetricExporter(options =>
+                                                          {
+                                                              options.ConnectionString = appInsightsConnString;
+                                                          }));
 
                    // connect traces with logs
                    services.AddLogging(loggingBuilder =>
@@ -45,6 +44,9 @@ var host = Host.CreateDefaultBuilder(args)
                            otelLoggerOptions.IncludeScopes = true;
                            otelLoggerOptions.ParseStateValues = true;
                            otelLoggerOptions.AddConsoleExporter();
+                           otelLoggerOptions.AddAzureMonitorLogExporter(options =>
+                               options.ConnectionString = appInsightsConnString
+                           );
                        }).AddConsole()
                    );
                })

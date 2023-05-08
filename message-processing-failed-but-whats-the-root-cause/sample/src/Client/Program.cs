@@ -1,87 +1,88 @@
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Commands;
-using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace RootCauseExample.Client
+namespace RootCauseExample.Client;
+
+public class Program
 {
-    public class Program
+    private const string EndpointName = "ClientAPI";
+
+    public static void Main(string[] args)
     {
-        const string EndpointName = "ClientAPI";
-        
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        CreateHostBuilder(args).Build().Run();
+    }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-                       .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
-                       .ConfigureServices((_, services) =>
-                       {
-                           // Enables capturing OpenTelemetry from the Azure SDK
-                           AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+                   .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                   .ConfigureServices((_, services) =>
+                   {
+                       // Enables capturing OpenTelemetry from the Azure SDK
+                       AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 
-                           var otelBuilder = services.AddOpenTelemetry();
-                           otelBuilder.ConfigureResource(_ => ResourceBuilder.CreateDefault().AddService(EndpointName));
-                           otelBuilder.WithTracing(builder => builder
-                                  .AddSource("NServiceBus.*")
-                                  .AddSource("Azure.*")
-                                  .AddAzureMonitorTraceExporter(options =>
-                                  {
-                                      options.ConnectionString = "insert-connection-string-here";
-                                  })
-                                  .AddJaegerExporter(c =>
-                                  {
-                                      c.AgentHost = "localhost";
-                                      c.AgentPort = 6831;
-                                  }));
-                           otelBuilder.WithMetrics(builder => builder
-                                .AddAspNetCoreInstrumentation()
-                                .AddMeter("NServiceBus.Core")
-                                .AddAzureMonitorMetricExporter(options =>
-                                {
-                                    options.ConnectionString = "insert-connection-string-here";
-                                }));
+                       var appInsightsConnString = Environment.GetEnvironmentVariable("AppInsights_ConnectionString");
+                       services.AddOpenTelemetry()
+                               .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                               .WithTracing(tracingBuilder => tracingBuilder
+                                                              .AddSource("NServiceBus.*")
+                                                              .AddSource("Azure.*")
+                                                              .AddAspNetCoreInstrumentation()
+                                                              .AddAzureMonitorTraceExporter(options =>
+                                                              {
+                                                                  options.ConnectionString = appInsightsConnString;
+                                                              })
+                                                              .AddJaegerExporter(c =>
+                                                              {
+                                                                  c.AgentHost = "localhost";
+                                                                  c.AgentPort = 6831;
+                                                              }))
+                               .WithMetrics(metricsBuilder => metricsBuilder
+                                                              .AddAspNetCoreInstrumentation()
+                                                              .AddMeter("NServiceBus.Core")
+                                                              .AddAzureMonitorMetricExporter(options =>
+                                                              {
+                                                                  options.ConnectionString = appInsightsConnString;
+                                                              }));
 
-                           // correlate traces with logs
-                           services.AddLogging(loggingBuilder =>
-                               loggingBuilder.AddOpenTelemetry(otelLoggerOptions =>
-                               {
-                                   otelLoggerOptions.IncludeFormattedMessage = true;
-                                   otelLoggerOptions.IncludeScopes = true;
-                                   otelLoggerOptions.ParseStateValues = true;
-                                   otelLoggerOptions.AddConsoleExporter();
-                               }).AddConsole()
-                           );
-                       })
-                       .UseNServiceBus(_ =>
-                       {
-                           var endpointConfiguration = new EndpointConfiguration(EndpointName);
-                           endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
-                           endpointConfiguration.UsePersistence<LearningPersistence>();
-
-                           var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
-                           var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
-                           if (string.IsNullOrEmpty(connectionString))
+                       // correlate traces with logs
+                       services.AddLogging(loggingBuilder =>
+                           loggingBuilder.AddOpenTelemetry(otelLoggerOptions =>
                            {
-                               throw new InvalidOperationException("Please specify a connection string.");
-                           }
-                           transport.ConnectionString(connectionString);
-                           transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Sales");
+                               otelLoggerOptions.IncludeFormattedMessage = true;
+                               otelLoggerOptions.IncludeScopes = true;
+                               otelLoggerOptions.ParseStateValues = true;
+                               otelLoggerOptions.AddAzureMonitorLogExporter(options =>
+                                   options.ConnectionString = appInsightsConnString
+                               );
+                               otelLoggerOptions.AddConsoleExporter();
+                           }).AddConsole()
+                       );
+                   })
+                   .UseNServiceBus(_ =>
+                   {
+                       var endpointConfiguration = new EndpointConfiguration(EndpointName);
+                       endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
+                       endpointConfiguration.UsePersistence<LearningPersistence>();
 
-                           endpointConfiguration.EnableInstallers();
-                           endpointConfiguration.EnableOpenTelemetry();
+                       var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
+                       var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
+                       if (string.IsNullOrEmpty(connectionString))
+                           throw new InvalidOperationException("Please specify a connection string.");
+                       transport.ConnectionString(connectionString);
+                       transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Sales");
 
-                           endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
-                           endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
+                       endpointConfiguration.EnableInstallers();
+                       endpointConfiguration.EnableOpenTelemetry();
 
-                           return endpointConfiguration;
-                       });
-        }
+                       endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
+                       endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
+
+                       return endpointConfiguration;
+                   });
     }
 }
