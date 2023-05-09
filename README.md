@@ -13,5 +13,5 @@ Each talk's resources is stored by name in a dedicated folder, each containing i
 Feel free to share this repo with all your coding friends! If you have any feedback that you would like to share on any of my talks, feel free to contact me:
 
 - [@noctovis on Twitter](http://twitter.com/noctovis)
-- [@noctovis@hachyderm.io on Mastodon]([Mastodon](https://hachyderm.io/@noctovis))
+- [@noctovis@hachyderm.io on Mastodon](https://hachyderm.io/@noctovis)
 - [lailabougria on LinkedIn](http://linkedin.com/in/lailabougria)
