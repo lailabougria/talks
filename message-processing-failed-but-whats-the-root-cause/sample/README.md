@@ -11,18 +11,27 @@ The sample demonstrates how to:
 
 ## Setting up OpenTelemetry
 
-In the sample, I'm making use of the Microsoft.Extensions.Hosting package. By pulling in the [`OpenTelemetry.Extensions.Hosting`-package](https://www.nuget.org/packages/OpenTelemetry.Extensions.Hosting), a method becomes available to add OpenTelemetry to the component:
+In the sample, I'm making use of the Microsoft.Extensions.Hosting package. By pulling in the [`OpenTelemetry.Extensions.Hosting`-package](https://www.nuget.org/packages/OpenTelemetry.Extensions.Hosting), a method becomes available to add OpenTelemetry to the component.
+Both tracing and metrics are configured:
 
 ``` c#
- services.AddOpenTelemetryTracing(config => config
-      .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("component-name"))
-      .AddSource("Azure.*")
-      .AddSource("NServiceBus.*")
-      .AddAzureMonitorTraceExporter(options =>
-      {
-          options.ConnectionString = "insert-connection-string-here";
-      })
-);
+services.AddOpenTelemetry()
+        .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+        .WithTracing(tracingBuilder => tracingBuilder
+                                      .AddSource("NServiceBus.*")
+                                      .AddSource("Azure.*")
+                                      .AddAspNetCoreInstrumentation()
+                                      .AddAzureMonitorTraceExporter(options =>
+                                      {
+                                          options.ConnectionString = appInsightsConnString;
+                                      })
+        .WithMetrics(metricsBuilder => metricsBuilder
+                                      .AddAspNetCoreInstrumentation()
+                                      .AddMeter("NServiceBus.Core")
+                                      .AddAzureMonitorMetricExporter(options =>
+                                      {
+                                          options.ConnectionString = appInsightsConnString;
+                                      }));
 ```
 
 To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
@@ -33,11 +42,11 @@ endpointConfiguration.EnableOpenTelemetry();
 
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
-Relevant sources from which to collect tracing information should be added. This sample collects tracing from NServiceBus and the Azure SDK in this example.
+Relevant sources from which to collect traces and metrics should be configures. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
 Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
 OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
 
-In this setup, the collected tracing information is exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview). The `AddAzureMonitorTraceExporter`-method becomes available through the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
+In this setup, the collected traces and metrics are exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview), by use of the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
 For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
 
 ## Emitting trace information
@@ -86,13 +95,16 @@ By connecting the traces and logs, each log message will have a reference to a t
 To connect traces and logs, logging needs to be configured with OpenTelemetry. When using the Microsoft.Extensions.Logging framework, OpenTelemetry can be enabled as part of the logging configuration:
 
 ``` c#
- services.AddLogging(loggingBuilder =>
-                       loggingBuilder.AddOpenTelemetry(otelLoggerOptions =>
-                       {
-                           otelLoggerOptions.IncludeFormattedMessage = true;
-                           otelLoggerOptions.IncludeScopes = true;
-                           otelLoggerOptions.ParseStateValues = true;
-                           otelLoggerOptions.AddConsoleExporter();
-                       }).AddConsole()
-                   );
+services.AddLogging(loggingBuilder =>
+       loggingBuilder.AddOpenTelemetry(otelLoggerOptions =>
+       {
+           otelLoggerOptions.IncludeFormattedMessage = true;
+           otelLoggerOptions.IncludeScopes = true;
+           otelLoggerOptions.ParseStateValues = true;
+           otelLoggerOptions.AddAzureMonitorLogExporter(options =>
+               options.ConnectionString = appInsightsConnString
+           );
+           otelLoggerOptions.AddConsoleExporter();
+       }).AddConsole()
+   );
 ```
