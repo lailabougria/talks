@@ -9,26 +9,6 @@ using OpenTelemetry.Trace;
 const string EndpointName = "Billing";
 
 var host = Host.CreateDefaultBuilder(args)
-               .UseNServiceBus(context =>
-               {
-                   var endpointConfiguration = new EndpointConfiguration(EndpointName);
-                   endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
-                   endpointConfiguration.UsePersistence<LearningPersistence>();
-
-                   var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
-                   var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
-                   if (string.IsNullOrEmpty(connectionString))
-                       throw new InvalidOperationException("Please specify a connection string.");
-                   transport.ConnectionString(connectionString);
-
-                   endpointConfiguration.EnableInstallers();
-                   endpointConfiguration.EnableOpenTelemetry();
-
-                   endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
-                   endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
-
-                   return endpointConfiguration;
-               })
                .ConfigureServices((builder, services) =>
                {
                    // Enables capturing OpenTelemetry from the Azure SDK
@@ -69,6 +49,26 @@ var host = Host.CreateDefaultBuilder(args)
                            );
                        }).AddConsole()
                    );
+               })
+               .UseNServiceBus(context =>
+               {
+                   var endpointConfiguration = new EndpointConfiguration(EndpointName);
+                   endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
+                   endpointConfiguration.UsePersistence<LearningPersistence>();
+
+                   var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
+                   var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
+                   if (string.IsNullOrEmpty(connectionString))
+                       throw new InvalidOperationException("Please specify a connection string.");
+                   transport.ConnectionString(connectionString);
+
+                   endpointConfiguration.EnableInstallers();
+                   endpointConfiguration.EnableOpenTelemetry();
+
+                   endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
+                   endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
+
+                   return endpointConfiguration;
                })
                .Build();
 
