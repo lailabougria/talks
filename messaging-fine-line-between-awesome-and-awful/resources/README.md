@@ -2,6 +2,11 @@
 
 Here you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
+## Fallacies of distributed computing
+
+- [Fallacies of distributed computing on Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing)
+- [Distributed Systems Design Fundamentals FREE course, by Udi Dahan](https://go.particular.net/Techoramabe-23)
+
 ## Patterns
 
 - [Asynchronous request-response pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
@@ -10,11 +15,6 @@ Here you can find a list of resources to further your understanding of these top
 - [Sagas, Clemens Vasters](https://vasters.com/archive/Sagas.html)
 - [Choreography](https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography)
 - [Idempotency patterns](https://blog.jonathanoliver.com/idempotency-patterns/)
-
-## Fallacies of distributed computing
-
-- [Fallacies of distributed computing on Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing)
-- [Distributed Systems Design Fundamentals course, by Udi Dahan](https://learn.particular.net/courses/distributed-systems-design-fundamentals-online)
 
 ## Additional messaging features
 
