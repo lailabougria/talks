@@ -9,11 +9,12 @@ Here you can find a list of resources to further your understanding of these top
 
 ## Patterns
 
-- [Asynchronous request-response pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
-- [Publish-subscribe pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber)
-- [Saga distributed transactions pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga)
+- [Asynchronous request-response pattern, Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
+- [Publish-subscribe pattern, Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber)
+- [Saga distributed transactions pattern, Microsoft](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga)
 - [Sagas, Clemens Vasters](https://vasters.com/archive/Sagas.html)
-- [Choreography](https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography)
+- [Saga, Chris Richardson](https://microservices.io/patterns/data/saga.html)
+- [Choreography, Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/choreography)
 - [Idempotency patterns](https://blog.jonathanoliver.com/idempotency-patterns/)
 
 ## Additional messaging features
@@ -53,4 +54,4 @@ I have two dedicated talks about observability and OpenTelemetry, including addi
 
 ### Books
 
-- [Software Architecture: the hard parts, by Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/)
+[Software Architecture: the hard parts, by Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/) is a very good read. It covers decoupling patterns in depth, as well as a thorough comparison of orchestration versus choreography in the later chapters.
