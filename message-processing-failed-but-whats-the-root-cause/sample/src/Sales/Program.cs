@@ -63,7 +63,7 @@ var host = Host.CreateDefaultBuilder(args)
                        throw new InvalidOperationException("Please specify a connection string.");
                    transport.ConnectionString(connectionString);
 
-                   transport.Routing().RouteToEndpoint(typeof(ChargeOrder), "Finance");
+                   transport.Routing().RouteToEndpoint(typeof(ChargeOrder), "Payments");
                    endpointConfiguration.EnableInstallers();
                    endpointConfiguration.EnableOpenTelemetry();
 

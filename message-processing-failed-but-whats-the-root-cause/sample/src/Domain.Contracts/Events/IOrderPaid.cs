@@ -1,8 +1,6 @@
-using NServiceBus;
-
 namespace Events;
 
-public interface IOrderCharged : IEvent
+public interface IOrderPaid : IEvent
 {
     Guid CustomerId { get; set; }
     OrderDetails Order { get; set; }

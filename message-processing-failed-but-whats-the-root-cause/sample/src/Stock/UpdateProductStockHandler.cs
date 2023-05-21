@@ -1,5 +1,4 @@
 using Commands;
-using NServiceBus;
 using NServiceBus.Logging;
 using System.Diagnostics;
 
@@ -9,11 +8,11 @@ public class UpdateProductStockHandler : IHandleMessages<UpdateProductStock>
 {
     private static readonly ILog log = LogManager.GetLogger<UpdateProductStockHandler>();
 
-    private static readonly ActivitySource source = new("Inventory", "1.0.0");
+    private static readonly ActivitySource source = new("Stock", "1.0.0");
 
     public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
     {
-        using Activity? activity = source.StartActivity("Inventory_UpdateProductStock");
+        using Activity? activity = source.StartActivity("Stock_UpdateProductStock");
         var random = new Random(4);
 
         try 

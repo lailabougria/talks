@@ -6,7 +6,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-const string EndpointName = "Finance";
+const string EndpointName = "Payments";
 
 var host = Host.CreateDefaultBuilder(args)
                .ConfigureServices((_, services) =>

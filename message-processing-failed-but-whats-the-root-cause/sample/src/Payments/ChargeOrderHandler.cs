@@ -5,15 +5,15 @@ using NServiceBus.Logging;
 
 namespace Finance;
 
-public class ChargeOrderEventHandler : IHandleMessages<ChargeOrder>
+public class ChargeOrderHandler : IHandleMessages<ChargeOrder>
 {
-    private static readonly ILog log = LogManager.GetLogger<ChargeOrderEventHandler>();
+    private static readonly ILog log = LogManager.GetLogger<ChargeOrderHandler>();
 
     public async Task Handle(ChargeOrder message, IMessageHandlerContext context)
     {
         log.Info($"Charging credit card for order '{message.Order.OrderId}'...");
 
-        await context.Publish<IOrderCharged>(orderCharged =>
+        await context.Publish<IOrderPaid>(orderCharged =>
         {
             orderCharged.Order = message.Order;
         });

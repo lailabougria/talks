@@ -5,6 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Finance</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +15,6 @@
         <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="NServiceBus.Extensions.Hosting" Version="2.0.0" />
-        <PackageReference Include="NServiceBus.Extensions.Logging" Version="2.0.0" />
         <PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="3.1.2" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />

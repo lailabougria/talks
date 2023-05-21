@@ -4,11 +4,11 @@ using NServiceBus.Logging;
 
 namespace Sales;
 
-public class OrderChargedHandler : IHandleMessages<IOrderCharged>
+public class OrderPaidHandler : IHandleMessages<IOrderPaid>
 {
-    private static readonly ILog log = LogManager.GetLogger<OrderChargedHandler>();
+    private static readonly ILog log = LogManager.GetLogger<OrderPaidHandler>();
 
-    public async Task Handle(IOrderCharged message, IMessageHandlerContext context)
+    public async Task Handle(IOrderPaid message, IMessageHandlerContext context)
     {
         log.Info($"Order '{message.Order.OrderId}' was placed.");
 

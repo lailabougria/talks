@@ -9,7 +9,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using ILoggerFactory = NServiceBus.Logging.ILoggerFactory;
 
-const string EndpointName = "Inventory";
+const string EndpointName = "Stock";
 
 var host = Host.CreateDefaultBuilder(args)
                .ConfigureServices((builder, services) =>
@@ -20,7 +20,7 @@ var host = Host.CreateDefaultBuilder(args)
                    services.AddOpenTelemetry()
                            .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
                            .WithTracing(tracingBuilder => tracingBuilder
-                                                          .AddSource("Inventory")
+                                                          .AddSource("Stock")
                                                           .AddSource("NServiceBus.Core")
                                                           .AddSource("Azure.*")
                                                           .AddAzureMonitorTraceExporter(options =>
