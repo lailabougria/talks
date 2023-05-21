@@ -6,9 +6,9 @@ using NServiceBus.Logging;
 
 namespace Inventory;
 
-public class OrderPlacedEventHandler : IHandleMessages<IOrderPlaced>
+public class OrderPlacedHandler : IHandleMessages<IOrderPlaced>
 {
-    private static readonly ILog log = LogManager.GetLogger<OrderPlacedEventHandler>();
+    private static readonly ILog log = LogManager.GetLogger<OrderPlacedHandler>();
 
     public async Task Handle(IOrderPlaced message, IMessageHandlerContext context)
     {

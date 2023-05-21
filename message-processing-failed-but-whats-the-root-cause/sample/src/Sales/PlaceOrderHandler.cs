@@ -1,5 +1,4 @@
 ﻿using Commands;
-using NServiceBus;
 using NServiceBus.Logging;
 
 namespace Sales;
