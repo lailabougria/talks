@@ -21,7 +21,7 @@ This session was presented at the following conferences and/or user groups:
 - [NDC London](https://ndclondon.com/agenda/message-processing-failed-but-whats-the-root-cause-0sf6/0tqekbn4me8), January 23-27, 2023, London, United Kingdom
 - [Queaso GetTogether](https://www.queaso.be/news/MessageProcessing), March 30th, 2023, Destelbergen, Belgium
 - [NDC Oslo](https://ndcoslo.com/agenda/message-processing-failed-but-whats-the-root-cause-05sa/0y2g4ftymzi), May 22-26, 2023, Oslo, Norway
-- [.NET Enterprise Developer Day](https://www.developerweek.com/cloudx/net-enterprise-developer-day/)
+- [.NET Enterprise Developer Day](https://www.developerweek.com/cloudx/net-enterprise-developer-day/), August 22, 2023, Online
 
 A recording of this talk from NDC Oslo is available on [their YouTube channel](https://youtu.be/U8Aame0akl4).
 
