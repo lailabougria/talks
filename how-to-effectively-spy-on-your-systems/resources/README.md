@@ -40,6 +40,7 @@ The following blog posts are good further reading material connected to the sess
 
 - [Tail sampling, OpenTelemetry blog](https://opentelemetry.io/blog/2022/tail-sampling/)
 - [Tracestate probability sampling](https://opentelemetry.io/docs/reference/specification/trace/tracestate-probability-sampling/)
+- [Sampling Strategies in Observability](https://www.linkedin.com/pulse/sampling-strategies-observability-drew-robbins/)
 
 ### OpenTelemetry Collector
 
