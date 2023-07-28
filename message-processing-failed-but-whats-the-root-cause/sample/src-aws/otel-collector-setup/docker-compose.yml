@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  otel:
+    image: amazon/aws-otel-collector:latest
+    command: --config /config/collector-config.yml
+    volumes:
+      - ~/.aws:/root/.aws:ro
+      - .:/config
+    environment:
+      - AWS_REGION=eu-west-2
+    ports:
+      - '4317:4317'
