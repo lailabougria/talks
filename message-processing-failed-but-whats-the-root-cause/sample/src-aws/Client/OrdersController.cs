@@ -1,4 +1,5 @@
-﻿using Commands;
+﻿using System.Diagnostics;
+using Commands;
 using Domain;
 using Events;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ public class OrdersController : Controller
     public async Task<IActionResult> Create(string customerId)
     {
         var orderId = Guid.NewGuid();
+        
+        Console.WriteLine($"TraceID in Controller: {Activity.Current?.TraceId}");
 
         await messageSession.Send(new PlaceOrder
         {
