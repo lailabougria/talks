@@ -4,15 +4,22 @@ receivers:
       grpc:
         endpoint: 0.0.0.0:4317
 
+extensions:
+  health_check:
+
 exporters:
   logging:
-    loglevel: info
+    verbosity: detailed
   awsxray:
-    region: eu-west-2
+    region: eu-south-1
   awsemf:
-    region: eu-west-2
+    region: eu-south-1
 
 service:
+  extensions: [health_check]
+  telemetry:
+    logs:
+      level: "debug"
   pipelines:
     traces:
       receivers:
