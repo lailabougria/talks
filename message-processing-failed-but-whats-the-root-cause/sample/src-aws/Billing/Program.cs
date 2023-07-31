@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -8,28 +10,31 @@ using OpenTelemetry.Trace;
 
 const string EndpointName = "Billing";
 
+Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
+
 var host = Host.CreateDefaultBuilder(args)
                .ConfigureServices((builder, services) =>
                {
-                   var otlpExporterEndpoint = new Uri("0.0.0.0:4317");
+                   var otlpExporterEndpoint = new Uri("http://localhost:4317");
                    services.AddOpenTelemetry()
-                           .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                           .ConfigureResource(resourceBuilder => resourceBuilder
+                               .AddService(EndpointName)
+                               .AddTelemetrySdk())
                            .WithTracing(tracingBuilder => tracingBuilder
+                                                          .AddXRayTraceId()
                                                           .AddSource("NServiceBus.Core")
                                                           .AddAWSInstrumentation()
-                                                          .AddXRayTraceId()
                                                           .AddOtlpExporter(options =>
                                                           {
                                                               options.Endpoint = otlpExporterEndpoint;
-                                                          }))
+                                                          })
+                                                          .AddConsoleExporter())
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
                                                           .AddOtlpExporter(options =>
                                                           {
                                                               options.Endpoint = otlpExporterEndpoint;
                                                           }));
-
-                   //Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
 
                    // connect traces with logs
                    services.AddLogging(loggingBuilder =>

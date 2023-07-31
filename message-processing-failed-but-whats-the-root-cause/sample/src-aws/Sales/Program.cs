@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Commands;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -8,20 +12,27 @@ using OpenTelemetry.Trace;
 
 const string EndpointName = "Sales";
 
+Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
+
 var host = Host.CreateDefaultBuilder(args)
                .ConfigureServices((builder, services) =>
                {
-                   var otlpExporterEndpoint = new Uri("0.0.0.0:4317");
+                   var otlpExporterEndpoint = new Uri("http://localhost:4317");
                    services.AddOpenTelemetry()
-                           .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                           .ConfigureResource(resourceBuilder => resourceBuilder
+                               .AddService(EndpointName)
+                               .AddTelemetrySdk())
                            .WithTracing(tracingBuilder => tracingBuilder
                                                           .AddSource("NServiceBus.Core")
-                                                          .AddAWSInstrumentation()
+                                                          //.AddAWSInstrumentation()
                                                           .AddXRayTraceId()
                                                           .AddOtlpExporter(options =>
                                                           {
+                                                              options.Protocol = OtlpExportProtocol.Grpc;
                                                               options.Endpoint = otlpExporterEndpoint;
-                                                          }))
+                                                              options.ExportProcessorType = ExportProcessorType.Simple;
+                                                          })
+                                                          .AddConsoleExporter())
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
                                                           .AddOtlpExporter(options =>
@@ -54,7 +65,10 @@ var host = Host.CreateDefaultBuilder(args)
 
                    // Ensure environment variables contain AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_REGION
                    // Reference: https://docs.particular.net/transports/sqs/#configuration
-                   endpointConfiguration.UseTransport<SqsTransport>();
+                   var transport = endpointConfiguration.UseTransport<SqsTransport>();
+                   transport.Routing()
+                       .RouteToEndpoint(typeof(ChargeOrder), "Payments");
+                   
                    endpointConfiguration.EnableInstallers();
                    endpointConfiguration.EnableOpenTelemetry();
 

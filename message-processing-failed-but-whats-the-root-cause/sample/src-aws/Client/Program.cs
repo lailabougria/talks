@@ -1,4 +1,7 @@
 using Commands;
+using OpenTelemetry;
+using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -17,20 +20,33 @@ public class Program
 
     public static IHostBuilder CreateHostBuilder(string[] args)
     {
+        Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
+        
         return Host.CreateDefaultBuilder(args)
                    .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                    .ConfigureServices((_, services) =>
                    {
-                       var otlpExporterEndpoint = new Uri("0.0.0.0:4317");
+                       var otlpExporterEndpoint = new Uri("http://localhost:4317");
                        services.AddOpenTelemetry()
-                               .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                               .ConfigureResource(resourceBuilder => resourceBuilder
+                                   .AddService(EndpointName)
+                                   .AddTelemetrySdk())
                                .WithTracing(tracingBuilder => tracingBuilder
                                                               .AddSource("NServiceBus.Core")
+                                                              .AddAspNetCoreInstrumentation()
                                                               .AddAWSInstrumentation()
                                                               .AddXRayTraceId()
                                                               .AddOtlpExporter(options =>
                                                               {
+                                                                  options.Protocol = OtlpExportProtocol.Grpc;
+                                                                  options.ExportProcessorType = ExportProcessorType.Simple;
                                                                   options.Endpoint = otlpExporterEndpoint;
+                                                              })
+                                                              .AddConsoleExporter()
+                                                              .AddJaegerExporter(c =>
+                                                              {
+                                                                  c.AgentHost = "localhost";
+                                                                  c.AgentPort = 6831;
                                                               }))
                                .WithMetrics(metricsBuilder => metricsBuilder
                                                               .AddAspNetCoreInstrumentation()
