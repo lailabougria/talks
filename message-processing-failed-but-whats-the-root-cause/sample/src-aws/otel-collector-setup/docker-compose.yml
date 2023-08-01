@@ -10,3 +10,4 @@ services:
       - AWS_REGION=eu-west-2
     ports:
       - '4317:4317'
+      - '13133:13133'

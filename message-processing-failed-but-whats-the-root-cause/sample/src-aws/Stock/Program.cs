@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -8,19 +11,32 @@ using OpenTelemetry.Trace;
 
 const string EndpointName = "Stock";
 
+Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
+
 var host = Host.CreateDefaultBuilder(args)
                .ConfigureServices((builder, services) =>
                {
-                   var otlpExporterEndpoint = new Uri("0.0.0.0:4317");
+                   var otlpExporterEndpoint = new Uri("http://localhost:4317");
                    services.AddOpenTelemetry()
-                           .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+                           .ConfigureResource(resourceBuilder => resourceBuilder
+                               .AddService(EndpointName)
+                               .AddTelemetrySdk())
                            .WithTracing(tracingBuilder => tracingBuilder
                                                           .AddSource("NServiceBus.Core")
+                                                          .AddSource(EndpointName)
                                                           .AddAWSInstrumentation()
                                                           .AddXRayTraceId()
                                                           .AddOtlpExporter(options =>
                                                           {
+                                                              options.Protocol = OtlpExportProtocol.Grpc;
                                                               options.Endpoint = otlpExporterEndpoint;
+                                                              options.ExportProcessorType = ExportProcessorType.Simple;
+                                                          })
+                                                          .AddConsoleExporter()
+                                                          .AddJaegerExporter(c =>
+                                                          {
+                                                              c.AgentHost = "localhost";
+                                                              c.AgentPort = 6831;
                                                           }))
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
