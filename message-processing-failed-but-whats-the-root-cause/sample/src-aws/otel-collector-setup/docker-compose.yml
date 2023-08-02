@@ -8,8 +8,8 @@ services:
       - .:/config
     environment:
       - AWS_REGION=eu-west-2
-      - AWS_ACCESS_KEY_ID=AKIA2MS4YETSFRUXCMU3
-      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
     ports:
       - '4317:4317'
       - '13133:13133'
