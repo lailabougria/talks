@@ -1,13 +1,19 @@
 version: "3.7"
 services:
-  otel:
-    image: amazon/aws-otel-collector:latest
-    command: --config /config/collector-config.yml
-    volumes:
-      - ~/.aws:/root/.aws:ro
-      - .:/config
-    environment:
-      - AWS_REGION=eu-west-2
+  jaeger-all-in-one:
+    image: jaegertracing/all-in-one:latest
     ports:
-      - '4317:4317'
-      - '13133:13133'
+      - "16686:16686"
+      - "14268"
+      - "14250"
+  otel:
+    image: otel/opentelemetry-collector:0.29.0
+    volumes:
+      - ./collector-gateway.yml:/etc/collector-gateway.yml
+    command: [ "--config=/etc/collector-gateway.yml" ]
+    ports:
+        - "1888:1888"   # pprof extension
+        - "13133:13133" # health_check extension
+        - "4317:4317"        # OTLP gRPC receiver
+        - "4318:4318"        # OTLP HTTP receiver
+        - "55670:55679" # zpages extension

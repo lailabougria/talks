@@ -68,7 +68,7 @@ var host = Host.CreateDefaultBuilder(args)
                    var transport = endpointConfiguration.UseTransport<SqsTransport>();
                    transport.Routing()
                        .RouteToEndpoint(typeof(ChargeOrder), "Payments");
-                   
+
                    endpointConfiguration.EnableInstallers();
                    endpointConfiguration.EnableOpenTelemetry();
 

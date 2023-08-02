@@ -42,12 +42,7 @@ public class Program
                                                                   options.ExportProcessorType = ExportProcessorType.Simple;
                                                                   options.Endpoint = otlpExporterEndpoint;
                                                               })
-                                                              .AddConsoleExporter()
-                                                              .AddJaegerExporter(c =>
-                                                              {
-                                                                  c.AgentHost = "localhost";
-                                                                  c.AgentPort = 6831;
-                                                              }))
+                                                              .AddConsoleExporter())
                                .WithMetrics(metricsBuilder => metricsBuilder
                                                               .AddAspNetCoreInstrumentation()
                                                               .AddMeter("NServiceBus.Core")

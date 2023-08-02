@@ -18,8 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Contracts", "Domain.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtelCollector", "OtelCollector", "{7107E3CF-7B28-47EF-99C3-D4E68A5B9BF0}"
 	ProjectSection(SolutionItems) = preProject
-		otel-collector-setup\collector-config.yml = otel-collector-setup\collector-config.yml
 		otel-collector-setup\docker-compose.yml = otel-collector-setup\docker-compose.yml
+		otel-collector-setup\collector-gateway.yml = otel-collector-setup\collector-gateway.yml
 	EndProjectSection
 EndProject
 Global

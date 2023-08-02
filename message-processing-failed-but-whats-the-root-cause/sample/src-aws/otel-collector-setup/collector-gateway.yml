@@ -1,6 +1,8 @@
 receivers:
   otlp:
     protocols:
+      http:
+        endpoint: 0.0.0.0:4318
       grpc:
         endpoint: 0.0.0.0:4317
 
@@ -9,27 +11,31 @@ extensions:
 
 exporters:
   logging:
-    verbosity: detailed
-  awsxray:
-    region: eu-south-1
-  awsemf:
-    region: eu-south-1
+    loglevel: info
+  jaeger:
+    endpoint: jaeger-all-in-one:14250
+    insecure: true
+#  awsxray:
+#    region: eu-west-2
+#  awsemf:
+#    region: eu-west-2
 
 service:
   extensions: [health_check]
-  telemetry:
-    logs:
-      level: "debug"
+#  telemetry:
+#    logs:
+#      level: "debug"
   pipelines:
     traces:
       receivers:
         - otlp
-      exporters:
+      exporters: 
         - logging
-        - awsxray
+#        - awsxray
+        - jaeger
     metrics:
       receivers:
         - otlp
       exporters:
         - logging
-        - awsemf
+#        - awsemf
