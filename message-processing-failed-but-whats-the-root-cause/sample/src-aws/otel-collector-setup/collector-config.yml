@@ -6,30 +6,29 @@ receivers:
 
 extensions:
   health_check:
+  pprof:
+    endpoint: 0.0.0.0:1777
+
+processors:
+  batch:
 
 exporters:
   logging:
     verbosity: detailed
   awsxray:
-    region: eu-south-1
+    region: eu-west-2
   awsemf:
-    region: eu-south-1
+    region: eu-west-2
 
 service:
-  extensions: [health_check]
-  telemetry:
-    logs:
-      level: "debug"
   pipelines:
     traces:
-      receivers:
-        - otlp
-      exporters:
-        - logging
-        - awsxray
+      receivers: [ otlp ]
+      exporters: [ awsxray ]
     metrics:
-      receivers:
-        - otlp
-      exporters:
-        - logging
-        - awsemf
+      receivers: [ otlp ]
+      exporters: [ awsemf ]
+  extensions: [pprof]
+  telemetry:
+    logs:
+      level: debug

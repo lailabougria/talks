@@ -1,13 +1,17 @@
 version: "3.7"
 services:
   otel:
-    image: amazon/aws-otel-collector:latest
-    command: --config /config/collector-config.yml
+    image: public.ecr.aws/aws-observability/aws-otel-collector:latest
+    command: "--config /config/collector-config.yml"
     volumes:
-      - ~/.aws:/root/.aws:ro
+      - ~/.aws:/root/.aws
       - .:/config
     environment:
       - AWS_REGION=eu-west-2
+      - AWS_ACCESS_KEY_ID=AKIA2MS4YETSFRUXCMU3
+      - AWS_SECRET_ACCESS_KEY=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
     ports:
       - '4317:4317'
       - '13133:13133'
+      - "1777:1777"   # pprof extension
+      - "55679:55679" # zpages extension
