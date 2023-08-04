@@ -18,14 +18,26 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 - [OpenTelemetry concepts](https://opentelemetry.io/docs/concepts/)
 - [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
 
-### OpenTelemetry .NET SDK
+### OpenTelemetry in .NET
 
 - [Distributed tracing concepts](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts)
 - [OpenTelemetry .NET tracing - Getting started](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/getting-started)
 - [Customizing OpenTelemetry .NET SDK](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/customizing-the-sdk)
 - [How to report exceptions](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/trace/reporting-exceptions)
-- [OpenTelemetry with Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview)
 - [GitHub repo for the OpenTelemetry.NET project](https://github.com/open-telemetry/opentelemetry-dotnet)
+
+#### OpenTelemetry with Azure
+
+- [OpenTelemetry with Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview)
+
+
+#### OpenTelemetry with AWS
+
+- [AWS Distro for OpenTelemetry](https://aws.amazon.com/otel/)
+- [AWS Distro for OpenTelemetry in .NET GitHub repository](https://github.com/aws-observability/aws-otel-dotnet)
+- [AWS Distro for OpenTelemetry (ADOT) Collector](https://github.com/aws-observability/aws-otel-collector)
+- [OpenTelemetry with XRay](https://timbussmann.github.io/2022/07/14/opentelemetry-with-xray.html), by Tim Bussmann
+- [How to Instrument AWS Services with OpenTelemetry](https://www.aspecto.io/blog/getting-started-with-opentelemetry-aws), by Yoav Danieli
 
 ### Books
 
