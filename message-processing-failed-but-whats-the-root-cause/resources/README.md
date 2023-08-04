@@ -36,6 +36,7 @@ To fully understand how OpenTelemetry works and to best implement it in your sys
 - [AWS Distro for OpenTelemetry](https://aws.amazon.com/otel/)
 - [AWS Distro for OpenTelemetry in .NET GitHub repository](https://github.com/aws-observability/aws-otel-dotnet)
 - [AWS Distro for OpenTelemetry (ADOT) Collector](https://github.com/aws-observability/aws-otel-collector)
+- [Tracing with the AWS Distro for OpenTelemetry .NET SDK and X-Ray](https://aws-otel.github.io/docs/getting-started/dotnet-sdk/trace-manual-instr)
 - [OpenTelemetry with XRay](https://timbussmann.github.io/2022/07/14/opentelemetry-with-xray.html), by Tim Bussmann
 - [How to Instrument AWS Services with OpenTelemetry](https://www.aspecto.io/blog/getting-started-with-opentelemetry-aws), by Yoav Danieli
 
