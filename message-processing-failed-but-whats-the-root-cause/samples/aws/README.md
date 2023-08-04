@@ -1,13 +1,16 @@
 # Sample
 
-This sample showcases the use case presented during the session, a small online retail store. The sample uses [NServiceBus](https://docs.particular.net/) on top of [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) to send/publish messages/events between components. The sample makes use of the [Microsoft Generic Host](https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host).
+This sample showcases the use case presented during the session, a small online retail store. The sample uses [NServiceBus](https://docs.particular.net/) on top of [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) and [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/welcome.html) to send/publish messages/events between components. The sample makes use of the [Microsoft Generic Host](https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host).
 
 The sample demonstrates how to:
 
-- Collect telemetry information from the Azure SDK (experimental at the time of writing) and NServiceBus framework
-- Forward telemetry to an Azure Monitor exporter
-- Define and use an ActivitySource to emit tracing information
+- Collect telemetry information from ASP.NET Core, the AWS SDK, the NServiceBus framework
+- Define and use an ActivitySource to emit tracing information (in the Stock project)
 - Connect traces and logs
+- Use the AWS XRay extension that transforms the trace-id to an AWS XRay-compatible ID
+- Set up an OpenTelemetry Collector using the [AWS Distro for OpenTelemetry Collector](https://aws-otel.github.io/docs/getting-started/collector)
+- Forward telemetry from components to the OpenTelemetry Collector using the OTLP Exporter
+- Forward telemetry from the collector to [AWS XRay](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html) and [CloudWatch](https://docs.aws.amazon.com/cloudwatch/)
 
 ## Setting up OpenTelemetry
 
@@ -16,21 +19,20 @@ Both tracing and metrics are configured:
 
 ``` c#
 services.AddOpenTelemetry()
-        .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+        .ConfigureResource(resourceBuilder => resourceBuilder.AddService("component-name"))
         .WithTracing(tracingBuilder => tracingBuilder
-                                      .AddSource("NServiceBus.*")
-                                      .AddSource("Azure.*")
-                                      .AddAspNetCoreInstrumentation()
-                                      .AddAzureMonitorTraceExporter(options =>
+                                      .AddXRayTraceId()
+                                      .AddSource("NServiceBus.Core")
+                                      .AddAWSInstrumentation()
+                                      .AddOtlpExporter(options =>
                                       {
-                                          options.ConnectionString = appInsightsConnString;
+                                          options.Endpoint = otlpExporterEndpoint;
                                       })
         .WithMetrics(metricsBuilder => metricsBuilder
-                                      .AddAspNetCoreInstrumentation()
                                       .AddMeter("NServiceBus.Core")
-                                      .AddAzureMonitorMetricExporter(options =>
+                                      .AddOtlpExporter(options =>
                                       {
-                                          options.ConnectionString = appInsightsConnString;
+                                          options.Endpoint = otlpExporterEndpoint;
                                       }));
 ```
 

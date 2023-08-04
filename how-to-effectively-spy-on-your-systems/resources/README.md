@@ -43,6 +43,7 @@ The following blog posts are good further reading material connected to the sess
 
 ### OpenTelemetry Collector
 
+- [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
 - [What's a collector and why would I want one?](https://deploy.equinix.com/blog/opentelemetry-whats-a-collector-and-why-would-i-want-one)
 - [OpenTelemetry Collector Architecture](https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md)
 - [OpenTelemetry Collector scaling](https://opentelemetry.io/docs/collector/scaling/)
