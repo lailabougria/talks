@@ -34,17 +34,17 @@ services.AddOpenTelemetry()
                                       }));
 ```
 
-To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
-
-``` c#
-endpointConfiguration.EnableOpenTelemetry();
-```
-
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
 Relevant sources from which to collect traces and metrics should be configures. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
 Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
 OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
+
+To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
+
+``` c#
+endpointConfiguration.EnableOpenTelemetry();
+```
 
 In this setup, the collected traces and metrics are exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview), by use of the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
 For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
@@ -62,7 +62,7 @@ When handling the message, information can be traced as follows:
 ``` c#
 public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
 {
-    using Activity? activity = source.StartActivity("Inventory_UpdateProductStock");
+    using Activity? activity = source.StartActivity("Stock_UpdateProductStock");
 
     try 
     {
