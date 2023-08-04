@@ -36,27 +36,40 @@ services.AddOpenTelemetry()
                                       }));
 ```
 
-To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
+The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
+
+Relevant sources from which to collect traces and metrics should be configured. This sample collects tracing from ASP.NET Core, NServiceBus and the AWS SDK, and metrics for ASP.NET Core and NServiceBus.
+OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
+
+To collect telemetry information from NServiceBus v8, OpenTelemetry needs to be enabled on the endpoint configuration.
 
 ``` c#
 endpointConfiguration.EnableOpenTelemetry();
 ```
 
-The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
+This sample uses the [AWS Distro for OpenTelemetry Collector](https://aws-otel.github.io/docs/getting-started/collector).
+To start the collector, set the `AWS_ACCESS_KEY_ID`and `AWS_SECRET_ACCESS_KEY` properties in the `docker-compose.yml`-file and then run it.
 
-Relevant sources from which to collect traces and metrics should be configures. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
-Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
-OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
+To export telemetry information to the OpenTelemetry collector, the sample makes use of the [OpenTelemetry Protocol Exporter](https://opentelemetry.io/docs/specs/otel/protocol/exporter/), specifying the connection information to access the collector:
 
-In this setup, the collected traces and metrics are exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview), by use of the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
-For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
+``` c#
+  .AddOtlpExporter(options =>
+  {
+      options.Endpoint = otlpExporterEndpoint;
+  }));
+```
+
+The OpenTelemetry Collector is set up to export telemetry information to [AWS XRay](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html) and [CloudWatch](https://docs.aws.amazon.com/cloudwatch/), as shown in the `collector-config.yml`-file in the exporters.
+
+AWS X-Ray uses a specific format for the trace-ids and [doesn't currently support](https://aws-otel.github.io/docs/getting-started/dotnet-sdk/trace-manual-instr#installation) the [W3C TraceContext trace-id standard](https://www.w3.org/TR/trace-context/#traceparent-header). To ensure AWS X-Ray can recognise the trace-id, we need to make use of the `OpenTelemetry.Contrib.Extensions.AWSXRay`-package. This package exposes an extension method called `AddXRayTraceId` that overrides the generated trace-id and replaces it with an X-Ray-compatible trace-id.
+Note that this affects all traces, independent from the locations to which you're exporting the traces.
 
 ## Emitting trace information
 
-As shown in the Inventory component, in order to add custom tracing to an application, first, an `ActivitySource` needs to be defined.
+As shown in the Stock component, in order to add custom tracing to an application, first, an `ActivitySource` needs to be defined.
 
 ``` c#
-private static readonly ActivitySource source = new("Inventory", "1.0.0");
+private static readonly ActivitySource source = new("Stock", "1.0.0");
 ````
 
 When handling the message, information can be traced as follows:
@@ -64,7 +77,7 @@ When handling the message, information can be traced as follows:
 ``` c#
 public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
 {
-    using Activity? activity = source.StartActivity("Inventory_UpdateProductStock");
+    using Activity? activity = source.StartActivity("Stock_UpdateProductStock");
 
     try 
     {
@@ -103,10 +116,12 @@ services.AddLogging(loggingBuilder =>
            otelLoggerOptions.IncludeFormattedMessage = true;
            otelLoggerOptions.IncludeScopes = true;
            otelLoggerOptions.ParseStateValues = true;
-           otelLoggerOptions.AddAzureMonitorLogExporter(options =>
-               options.ConnectionString = appInsightsConnString
+           otelLoggerOptions.AddOtlpExporter(options =>
+               options.Endpoint = otlpExporterEndpoint
            );
            otelLoggerOptions.AddConsoleExporter();
        }).AddConsole()
    );
 ```
+
+In this sample, we're setting up the OTLP Exporter for logging, emitting logs to the OpenTelemetry Collector as well.
