@@ -4,10 +4,10 @@ This sample showcases the use case presented during the session, a small online 
 
 The sample demonstrates how to:
 
-- Collect telemetry information from the Azure SDK (experimental at the time of writing) and NServiceBus framework
-- Forward telemetry to an Azure Monitor exporter
+- Collect telemetry information from ASP.NET Core, the Azure SDK (experimental at the time of writing), the NServiceBus framework, and a custom ActivitySource declared in the Stock project
 - Define and use an ActivitySource to emit tracing information
 - Connect traces and logs
+- Forward telemetry to an [Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/overview) exporter
 
 ## Setting up OpenTelemetry
 
@@ -16,7 +16,7 @@ Both tracing and metrics are configured:
 
 ``` c#
 services.AddOpenTelemetry()
-        .ConfigureResource(resourceBuilder => resourceBuilder.AddService(EndpointName))
+        .ConfigureResource(resourceBuilder => resourceBuilder.AddService("component-name"))
         .WithTracing(tracingBuilder => tracingBuilder
                                       .AddSource("NServiceBus.*")
                                       .AddSource("Azure.*")
@@ -34,27 +34,27 @@ services.AddOpenTelemetry()
                                       }));
 ```
 
-To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
-
-``` c#
-endpointConfiguration.EnableOpenTelemetry();
-```
-
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
 Relevant sources from which to collect traces and metrics should be configures. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
 Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
 OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
 
+To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
+
+``` c#
+endpointConfiguration.EnableOpenTelemetry();
+```
+
 In this setup, the collected traces and metrics are exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview), by use of the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
 For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
 
 ## Emitting trace information
 
-As shown in the Inventory component, in order to add custom tracing to an application, first, an `ActivitySource` needs to be defined.
+As shown in the Stock component, in order to add custom tracing to an application, first, an `ActivitySource` needs to be defined.
 
 ``` c#
-private static readonly ActivitySource source = new("Inventory", "1.0.0");
+private static readonly ActivitySource source = new("Stock", "1.0.0");
 ````
 
 When handling the message, information can be traced as follows:
@@ -62,7 +62,7 @@ When handling the message, information can be traced as follows:
 ``` c#
 public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
 {
-    using Activity? activity = source.StartActivity("Inventory_UpdateProductStock");
+    using Activity? activity = source.StartActivity("Stock_UpdateProductStock");
 
     try 
     {
