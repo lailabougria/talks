@@ -16,6 +16,7 @@ This session was presented at the following conferences and/or user groups:
 - [DDD SoCal](https://www.meetup.com/ddd-socal/events/291671819/), March 15, 2023, Online
 - [Techorama](https://techorama.be/agenda/session/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), May 15-17, 2023, Antwerp, Belgium
 - [DDD Europe](https://2023.dddeurope.com/program/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), June 8-9, 2023, Amsterdam, Netherlands
+- [.NET Day Switzerland](https://dotnetday.ch/speakers/laila-bourgia.html), August 29, 2023, Zürich, Switzerland
 
 ## Additional information
 
