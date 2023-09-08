@@ -13,6 +13,7 @@ We need to understand how to choose the right observability signal for each use 
 This session was presented at the following conferences and/or user groups:
 
 - [Building Bruges](https://buildingbruges.be/10-may-2023-how-to-effectively-spy-on-your-systems/), May 10th, 2023, Bruges, Belgium
+- [JetBrains .NET Day Online 2023](https://lp.jetbrains.com/dotnet-day-2023/#agenda), September 26th, 2023, Online
 
 ## Additional information
 
