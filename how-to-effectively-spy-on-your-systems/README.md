@@ -17,4 +17,4 @@ This session was presented at the following conferences and/or user groups:
 
 ## Additional information
 
-Make sure to check the additional [resources](resources) for this topic.
+Make sure to check the additional [resources](resources) for this topic. For samples, check out the OpenTelemetry in .NET samples [in this talk](https://github.com/lailabougria/talks/tree/main/message-processing-failed-but-whats-the-root-cause/samples).
