@@ -17,6 +17,7 @@ This session was presented at the following conferences and/or user groups:
 - [Techorama](https://techorama.be/agenda/session/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), May 15-17, 2023, Antwerp, Belgium
 - [DDD Europe](https://2023.dddeurope.com/program/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), June 8-9, 2023, Amsterdam, Netherlands
 - [.NET Day Switzerland](https://dotnetday.ch/speakers/laila-bourgia.html), August 29, 2023, Zürich, Switzerland
+- [Techorama NL](https://techorama.nl/speakers/session/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), October 09-11, 2023, Utrecht, Netherlands
 - [NDC London](https://ndclondon.com/agenda/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it-0hiy/08lshr7f4zl), January 29 Jan – February 2nd 2024, London, UK
 
 ## Additional information
