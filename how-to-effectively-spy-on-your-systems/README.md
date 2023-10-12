@@ -14,6 +14,9 @@ This session was presented at the following conferences and/or user groups:
 
 - [Building Bruges](https://buildingbruges.be/10-may-2023-how-to-effectively-spy-on-your-systems/), May 10th, 2023, Bruges, Belgium
 - [JetBrains .NET Day Online 2023](https://lp.jetbrains.com/dotnet-day-2023/#agenda), September 26th, 2023, Online
+- [NDC London](https://ndclondon.com/agenda/how-to-effectively-spy-on-your-systems-0f1r/0526r140en9), January 29 Jan – February 2nd 2024, London, UK
+
+A recording of this talk from the JetBrains .NET Day Online is available on [their YouTube channel](https://www.youtube.com/watch?v=kJQp-fIet1E).
 
 ## Additional information
 
