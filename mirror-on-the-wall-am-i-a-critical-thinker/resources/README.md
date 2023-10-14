@@ -6,8 +6,8 @@ Here you can find a list of resources to further your understanding of these top
 
 ### On critical thinking
 
-- [Defining critical thinking](https://www.criticalthinking.org/pages/defining-critical-thinking/766)
-- [Wikipedia's definition of critical thinking](https://en.wikipedia.org/wiki/Critical_thinking)
+- [Defining critical thinking](https://www.criticalthinking.org/pages/defining-critical-thinking/766), by the foundation for critical thinking 
+- [Definition of critical thinking](https://en.wikipedia.org/wiki/Critical_thinking), Wikipedia
 - [Software engineering: problem-solving and critical-thinking](https://addyosmani.com/blog/softeng-problem-solving/), by Addy Osmani
 
 ### Problem statement
