@@ -1,6 +1,6 @@
 ﻿# Resources
 
-Here you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
+Here, you can find a list of resources to further your understanding of these topics. I keep this list up to date with new resources I come across. If you can think of valuable additions, feel free to contribute!
 
 ## Articles
 
@@ -51,3 +51,4 @@ Here you can find a list of resources to further your understanding of these top
 - [Start with WHY](https://simonsinek.com/books/start-with-why/), by Simon Sinek
 - [HBR Guide to Thinking Strategically](https://store.hbr.org/product/hbr-guide-to-thinking-strategically/10237), The Harvard Business Review
 - [Thinking, fast and slow](https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555), by Daniel Kahneman
+- [Blindspot: Hidden Biases of Good People](https://www.amazon.com/Blindspot-Hidden-Biases-Good-People/dp/0345528433), by Mahzarin Banaji and Anthony Greenwald
