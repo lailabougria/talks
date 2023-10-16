@@ -14,6 +14,7 @@ This is a sample template showing the decision-making building blocks used durin
 
 <!--
   Identify the stakeholders impacted by the problem.
+  Connect the problem to the need(s) it would be addressing.
 -->
 
 ## Alternative approaches
@@ -22,13 +23,13 @@ This is a sample template showing the decision-making building blocks used durin
 
 <!-- 
   - Repeat this section for each alternative
-  - Each alternative should be self-sufficient, and not reference any of the other alternatives at this point.
+  - Each alternative should be self-sufficient and not reference any of the other alternatives at this point.
 -->
 
 #### Supporting data points
 
 <!--
-  List any supporting data points that are relevant to problem statement and the context of your organization and system.
+  List any supporting data points **relevant** to the problem statement and the context of your organization and system.
 -->
 
 #### Assumptions
@@ -53,7 +54,7 @@ This is a sample template showing the decision-making building blocks used durin
 ### Tradeoff analysis
 
 <!--
-  Any tradeoff analysis done when comparing the alternatives, can be noted here.
+  Any tradeoff analysis done when comparing the alternatives can be noted here.
 -->
 
 ### Risk mitigation
@@ -62,9 +63,4 @@ This is a sample template showing the decision-making building blocks used durin
   How will the risks identified with this solution alternative be mitigated? If they are accepted, how will they be tracked?
 -->
 
-### Impact
-
-<!--
-  Apart from the key stakeholders that are affected by the problem, are there any other stakeholders affected by the proposed decision?
--->
 ```
