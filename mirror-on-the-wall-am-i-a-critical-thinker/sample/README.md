@@ -45,16 +45,16 @@ This is a sample template showing the decision-making building blocks used durin
   - Remember that an ever-present risk is that any of the listed assumptions turn out to be false. These should be considered as well.
 -->
 
-## Proposed decision
-
-<!-- 
-  Present the proposed decision. This should link back to one of the alternatives presented above.
--->
-
 ### Tradeoff analysis
 
 <!--
   Any tradeoff analysis done when comparing the alternatives can be noted here.
+-->
+
+## Proposed decision
+
+<!-- 
+  Present the proposed decision. This should link back to one of the alternatives presented above.
 -->
 
 ### Risk mitigation
