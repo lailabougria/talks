@@ -8,4 +8,5 @@ How do you structure your decisions, and how do they affect the software you bui
 
 ## Where?
 
-- [Keynote at NDC London](URL), January 29 - February 2, 2024, London, United Kingdom
+- [Keynote at NDC London](https://ndclondon.com/agenda/debug-your-thinking/b9254f6c8eed), January 29 - February 2, 2024, London, United Kingdom
+- [NDC Sydney](https://ndcsydney.com/agenda/debug-your-thinking-sydney/7b8c2ed372bc), February 12 - 16, 2024, Sydney, Australia
