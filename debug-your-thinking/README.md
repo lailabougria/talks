@@ -1,5 +1,7 @@
 # Debug your thinking
 
+![debug your thinking](debug-thinking-banner.jpg)
+
 ## Abstract
 
 There’s a myriad of complexity involved in building systems. However, two decades in software engineering taught me what truly makes or breaks a system: decisions. It’s not the programming language, the data store, the deployment model, or [insert your favorite tech here]. It’s about the decisions made and the ripple effects they cause. We spend endless hours trying to keep up with the latest and greatest in an industry that sprints faster than a caffeinated cheetah... But how much time was invested in questioning, improving, or, essentially, debugging our thinking process?
