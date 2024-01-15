@@ -18,6 +18,10 @@ This session was/will be presented at the following conferences and/or user grou
 - [iSAQB Software Architecture Gathering](https://conferences.isaqb.org/software-architecture-gathering/program-2023/#mirror-mirror-on-the-wall-am-i-a-critical-thinker-after-all), November 27–30, 2023, Online
 - [CloudBrew](https://www.cloudbrew.be/#session-mirror-mirror-on-the-wall--am-i-a-critical-thinker-after-all-), December 7-8, 2023, Mechelen, Belgium
 
+## Recording
+
+A recording of this talk from NDC Porto is available [on their YouTube channel](https://youtu.be/fxB2aMKcZDw?si=u-Ke1DbZ1lhbmJjW).
+
 ## Additional information
 
 Make sure to check the additional [resources](resources) for this topic.
