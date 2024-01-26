@@ -1,6 +1,6 @@
 # Resources
 
-If my session reasonated with you, and you're looking for a practical approach to implement structured critical thinking for decision-making in your organization, [check out my practical talk on the topic](https://youtu.be/fxB2aMKcZDw?si=u-Ke1DbZ1lhbmJjW).
+If my session resonated with you, and you're looking for a practical approach to implement structured critical thinking for decision-making in your organization, [check out my practical talk on the topic](https://youtu.be/fxB2aMKcZDw?si=u-Ke1DbZ1lhbmJjW).
 
 In addition, you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
@@ -21,8 +21,39 @@ The following articles are good further reading material connected to the sessio
 
 ### Problem-framing
 
+- [Are you solving the right problems?](https://hbr.org/2017/01/are-you-solving-the-right-problems), by Thomas Wedell-Wedellsborg
+- [The problem-definition process](https://www.mindtools.com/ap08zqt/the-problem-definition-process), by the Mind Tools Content Team
+
 ### Decision-making
+
+### Bias
+
+- [How to question your assumptions](https://talenttalks.net/assumptions/)
+- [Questioning Your Assumptions: Why It's Important for Personal and Professional Growth](https://www.linkedin.com/pulse/questioning-your-assumptions-why-its-important-growth-doerr-cris/), by Joseph Doerr
+- [Don't let being new stop you from speaking up](https://hbr.org/2022/01/dont-let-being-new-stop-you-from-speaking-up), by Ethan Burris and Ruchi Sinha
+- [16 cognitive biases that can kill your decision making](https://www.boardofinnovation.com/blog/16-cognitive-biases-that-kill-innovative-thinking/)
+
+## Techniques
 
 ### Out-of-the-box thinking
 
-### Bias
+- [Convergent thinking](https://en.wikipedia.org/wiki/Convergent_thinking)
+- [Divergent thinking](https://en.wikipedia.org/wiki/Divergent_thinking)
+- [Finding the balance between convergent and divergent thinking](https://nulab.com/learn/strategy-and-planning/divergent-vs-convergent-thinking-how-to-find-the-right-balance)
+- [Brainstorming](https://en.wikipedia.org/wiki/Brainstorming)
+- [Brainwriting](https://www.mindtools.com/ak3qj17/brainwriting)
+- [Mind map](https://en.wikipedia.org/wiki/Mind_map)
+- [Reverse brainstorming](https://www.mindtools.com/a32qxsh/reverse-brainstorming)
+
+### Wide request for feedback
+
+A wider request for feedback can be implemented through RFCs (Request for Comments). In a different session, I explain how such an RFC process can be implemented with practical tips and tricks. The [recording of this talk](https://youtu.be/fxB2aMKcZDw?si=PC47gvCvJQiw-DRJ) is available on YouTube.
+[Architectural Decision Records](https://adr.github.io/) can serve as a technique to document decisions, or you can make use of this [template](/mirror-on-the-wall-am-i-a-critical-thinker/sample).
+
+### Other
+
+- [The 5 whys technique](https://en.wikipedia.org/wiki/Five_whys)
+- [What is mindfulness?](https://www.mindful.org/what-is-mindfulness/)
+- [Lego and mindfulness](https://www.lego.com/en-be/categories/adults-welcome/article/mindfulness)
+- [How to question your assumptions](https://talenttalks.net/assumptions/)
+- [Questioning Your Assumptions: Why It's Important for Personal and Professional Growth](https://www.linkedin.com/pulse/questioning-your-assumptions-why-its-important-growth-doerr-cris/), by Joseph Doerr
