@@ -24,16 +24,12 @@ The following articles are good further reading material connected to the sessio
 - [Are you solving the right problems?](https://hbr.org/2017/01/are-you-solving-the-right-problems), by Thomas Wedell-Wedellsborg
 - [The problem-definition process](https://www.mindtools.com/ap08zqt/the-problem-definition-process), by the Mind Tools Content Team
 
-### Decision-making
-
 ### Bias
 
 - [How to question your assumptions](https://talenttalks.net/assumptions/)
 - [Questioning Your Assumptions: Why It's Important for Personal and Professional Growth](https://www.linkedin.com/pulse/questioning-your-assumptions-why-its-important-growth-doerr-cris/), by Joseph Doerr
 - [Don't let being new stop you from speaking up](https://hbr.org/2022/01/dont-let-being-new-stop-you-from-speaking-up), by Ethan Burris and Ruchi Sinha
 - [16 cognitive biases that can kill your decision making](https://www.boardofinnovation.com/blog/16-cognitive-biases-that-kill-innovative-thinking/)
-
-## Techniques
 
 ### Out-of-the-box thinking
 
