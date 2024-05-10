@@ -14,9 +14,9 @@ This session was/will be presented at the following conferences and/or user grou
 
 - [.NET Usergroup Zentralschweiz](https://www.meetup.com/net-usergroup-zentralschweiz/events/295091532/), August 22, 2023, Luzern, Switzerland
 - [NDC Porto](https://ndcporto.com/agenda/mirror-mirror-on-the-wall-am-i-a-critical-thinker-after-all/854753d4531d), October 16-20, 2023, Porto, Portugal
-- [Øredev](https://oredev.org/sessions/mirror-mirror-on-the-wall-am-i-a-critical-thinker-after-all-), November 8-10, 2023, Malmö, Sweden
 - [iSAQB Software Architecture Gathering](https://conferences.isaqb.org/software-architecture-gathering/program-2023/#mirror-mirror-on-the-wall-am-i-a-critical-thinker-after-all), November 27–30, 2023, Online
 - [CloudBrew](https://www.cloudbrew.be/#session-mirror-mirror-on-the-wall--am-i-a-critical-thinker-after-all-), December 7-8, 2023, Mechelen, Belgium
+- [Techorama Belgium](https://techorama.be/speakers/session/mirror-mirror-on-the-wall-am-i-a-critical-thinker-after-all/), May 6-8, 2024, Antwerp, Belgium
 
 ## Recording
 
