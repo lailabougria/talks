@@ -20,6 +20,10 @@ This session was presented at the following conferences and/or user groups:
 - [Techorama NL](https://techorama.nl/speakers/session/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it/), October 09-11, 2023, Utrecht, Netherlands
 - [NDC Oslo](https://ndcoslo.com/agenda/messaging-the-fine-line-between-awesome-and-awful-and-how-to-stay-on-the-right-side-of-it-0yl7/0zi6yurgg78), June 10-14, 2024, Oslo, Norway
 
+## Recording
+
+A recording of this talk from NDC Porto is available [on their YouTube channel](https://www.youtube.com/watch?v=pImwOEsQkQo).
+
 ## Additional information
 
 Make sure to check the additional [resources](resources) for this topic.
