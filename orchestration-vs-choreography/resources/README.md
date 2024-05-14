@@ -44,3 +44,9 @@ The following books cover the topics orchestration and choreography. They're lis
 - [Practical Process Automation](https://www.oreilly.com/library/view/practical-process-automation/9781492061441/), by Bernd Ruecker
 - [Building Microservices: Designing Fine-Grained Systems](https://www.oreilly.com/library/view/building-microservices-designing/9781663728203/), by Sam Newman, Theodore O'Brien
 
+### Observability
+
+Independent of the coordination style you end up with, implementing an observability strategy will be crucial to operating your systems in production.
+For additional information on the topic, check out my other talks on the topic, each including a link to the recording and additional resources and samples where applicable:
+- [Message processing failed, but what's the root cause?](/message-processing-failed-but-whats-the-root-cause)
+- [How to effectively spy on your systems](/how-to-effectively-spy-on-your-systems)
