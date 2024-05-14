@@ -6,8 +6,32 @@ Here, you can find a list of resources to further your understanding of these to
 
 This framework I developed for myself, and I've found useful over the years. It is based on learnings from the field and the books listed in the section below.
 
-```mermaid
+The flowchart below provides an overview of the decision-making process. It's important to note that this is a simplification, and sufficient questioning and analysis should happen in each diamond block. One main consideration to always keep in mind is the size of the workflow. If there are sub workflows that can be isolated, the exercise should be repeated for each individual workflow.
 
+```mermaid
+flowchart TD
+    A[Start]
+    A --> C{Which type
+     of communication 
+     is preferable?}
+    C -->|Synchronous| D[Sync Orchestration]
+    C -->|Asynchronous| E{Which direction
+     of coupling 
+     is preferred?}
+    E -->|Sender-side| F[Async Orchestration]
+    E -->|Receiver-side| G{Are there 
+    complex 
+    compensating flows?}
+    G -->|Yes| F[Async Orchestration]
+    G -->|No| H{Is there a 
+    high probability
+    of change?}
+    H -->|Yes| F[Async Orchestration]
+    H -->|No| I{Is there someone 
+    responsible for the
+    end-to-end flow?}
+    I -->|Yes| F[Async Orchestration]
+    I -->|No| Choreography
 ```
 
 Don't forget to draw each your workflow using both styles, as it can be useful to use a visual representation to consider hidden requirements, the impact of change, and so forth.
