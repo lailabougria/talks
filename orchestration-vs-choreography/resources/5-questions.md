@@ -1,6 +1,6 @@
 # The 5-question decision-framework
 
-I developed this framework over the years based on my learnings from the field and the [books listed in the resources](/README.MD#books).
+I developed this framework over the years based on my learnings from the field and the [books listed in the resources](README.md#books).
 This framework consists of five pillar questions, but it's important to dig further into the details of each pillar.
 
 The five main questions to keep in mind are:
