@@ -8,6 +8,16 @@ During this session, I introduced a framework of five essential questions we sho
 
 This is [documented in more detail](5-questions.md), accompanied with a flowchart.
 
+### Tooling
+
+- [Azure Logic Apps](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview)
+- [NServiceBus Sagas](https://docs.particular.net/nservicebus/sagas/)
+- [Azure durable functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-orchestrations?tabs=csharp-inproc)
+- [AWS Step Functions](https://aws.amazon.com/step-functions/)
+- [Dapr Workflow](https://docs.dapr.io/developing-applications/building-blocks/workflow/workflow-overview/)
+- [Camunda](https://camunda.com/solutions/microservices-orchestration/)
+- [Netflix Conductor](https://conductor.netflix.com/index.html)
+
 ### Books
 
 The following books cover the topics orchestration and choreography. They're listed in order of relevance:
