@@ -8,9 +8,9 @@ The five main questions to keep in mind are:
     - Are there business requirements for synchronous communication?
     - Is it acceptable for errors to occur and, in the worst case, for requests to be lost? Is the contrary true?
     - Are there scaling requirements that may affect this decision?
-2. Which direction of coupling is preferred? Does it make sense to couple the sender to the receiver or the receiver to a publisher?
-    - Does it make sense for the sender to be coupled to the receiver and introduce command coupling?
-    - Is it more suitable to decouple the sender from the receiver and instead rely on the inverse coupling?
+2. Do you have complex prerequisites that need to be met before advancing?
+    - Do you have multiple steps, or series of steps that need to be done before advancing to a next step?
+    - Are those steps represented by a series of different events?
 3. Are there complex compensating flows? Would they introduce significant bidirectional coupling?
     - How many compensation flows are there in this business process?
     - How extensive are they? Which services do they impact?
