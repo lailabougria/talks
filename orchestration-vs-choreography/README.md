@@ -8,8 +8,6 @@ One of the goals of building microservice-based architectures is to reduce the c
 
 In this session, we’ll thoroughly examine each pattern with practical examples from the banking business, based on almost five years of experience in this domain. By thoroughly understanding the tradeoffs of each approach and understanding the right questions to ask, we can build a mental framework that helps us make well-balanced decisions about which pattern to use. Join me in this session, where we’ll transform the abstract concepts of orchestration and choreography into a tangible decision-making framework that steers you in the right direction!
 
-## Where?
+## Is there a recording?
 
-This session was/will be presented at the following conferences and/or user groups:
-
-- [DevSum](https://www.devsum.se/agenda/orchestration-vs.-choreography-the-good-the-bad-and-the-trade-offs), May 15-17, 2024, Stockholm, Sweden
+A recording of this talk at [NDC Porto](https://ndcporto.com/) is [available on YouTube](https://www.youtube.com/watch?v=p8NTe7NFhH8).
