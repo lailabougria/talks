@@ -1,5 +1,7 @@
 # Change is inevitable: versioning event-driven systems
 
+![chnage-is-inevitable](versioning-banner.jpg)
+
 ## Abstract
 
 Building an event-driven system is anything but trivial. However, once you make it past the sea of pub-sub vs. command-response debates and the service boundaries conundrum, you'll soon face the inevitable: change. The conversations that follow sound all too familiar... "Who's subscribed to this message?" "Do other services depend on this field in the payload?" "Why on earth is that thing in the payload?" "That service should never rely on this data!" And, of course, the obvious "Can't we -just- remove this?"
