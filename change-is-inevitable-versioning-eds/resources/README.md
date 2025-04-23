@@ -1,8 +1,6 @@
 # Resources
 
-If my session resonated with you, and you're looking for a practical approach to implement structured critical thinking for decision-making in your organization, [check out my practical talk on the topic](https://youtu.be/fxB2aMKcZDw?si=u-Ke1DbZ1lhbmJjW).
-
-In addition, you can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
+You can find a list of resources to further your understanding of these topics. I try to keep this list up to date with new resources I come across, if you can think of valuable additions, feel free to contribute!
 
 ## Books
 
