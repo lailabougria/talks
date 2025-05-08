@@ -1,5 +1,7 @@
 # CTRL+SHIFT+~~BUILD~~ PAUSE
 
+![CTRL+SHIFT+BUILD-PAUSE](ctrl-shift-build-pause-banner.png)
+
 ## Abstract
 
 Copilots are everywhere these days, and… rightfully so! Let's face it: these tools are incredible at getting things done. They have the potential to turn any one of us into a 20x developer. Need a new feature? Bam, there you have it! Refactor that function? Sure, it'll be done before you grind the coffee for your next cup. These tools do a very good job of generating well-designed, tested, and performant code. Before you know it, you're not just building a feature—you're building 17 slightly different features simultaneously because why not? After all, the code writes itself!
