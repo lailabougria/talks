@@ -36,9 +36,9 @@ In addition, you can find a list of resources to further your understanding of t
 
 The following articles are good further reading material connected to the session.
 
-- [Is ChatGPT your biggest fan? Avoiding confirmation bias in AI interactions](https://atos.net/en/blog/is-chatgpt-your-biggest-fan-avoiding-confirmation-bias-biased-ai)
+- [Is ChatGPT your biggest fan? Avoiding confirmation bias in AI interactions](https://atos.net/en/blog/is-chatgpt-your-biggest-fan-avoiding-confirmation-bias-biased-ai), by Adil Tahiri
 - [The 70% problem: Hard truths about AI-assisted coding](https://addyo.substack.com/p/the-70-problem-hard-truths-about), by Addy Osmani
-- [Vibe coding introduction](https://x.com/karpathy/status/1886192184808149383 )
+- [Vibe coding introduction](https://x.com/karpathy/status/1886192184808149383), by Andrej Karpathy
 - [Vibe coding is for PMs](https://redmonk.com/rstephens/2025/04/18/vibe-coding-is-for-pms/), by Rachel Stephens
 - [User-centric engineering](https://addyo.substack.com/p/user-centric-engineering?utm_source=profile&utm_medium=reader2), by Addy Osmani
 - [Vibe Coding is not an excuse for low-quality work](https://addyo.substack.com/p/vibe-coding-is-not-an-excuse-for), by Addy Osmani
@@ -46,7 +46,7 @@ The following articles are good further reading material connected to the sessio
 - [Future-proofing your Software Engineering career](https://addyo.substack.com/p/future-proofing-your-software-engineering), by Addy Osmani
 - [How AI-assisted coding will change software engineering: hard truths](https://substack.com/home/post/p-154200840), by Gergely Orosz and Addy Osmani
 - [The golden age of modularity](https://vladikk.com/2025/03/30/golden-age-of-modularity/), by Vlad Khononov
-- [The death of the junior developer](https://sourcegraph.com/blog/the-death-of-the-junior-developer)
+- [The death of the junior developer](https://sourcegraph.com/blog/the-death-of-the-junior-developer), by Steve Yegge
 - [Why Non-Linear Careers Are The Future Of Work](https://www.forbes.com/sites/carolinecastrillon/2025/03/18/why-non-linear-careers-are-the-future-of-work/), by Caroline Castrillon
-- [Sycophancy in GPT-4o: what happened and what we’re doing about it](https://openai.com/index/sycophancy-in-gpt-4o/)
-- https://www.theregister.com/2025/04/30/microsoft_meta_autocoding/
+- [Sycophancy in GPT-4o: what happened and what we’re doing about it](https://openai.com/index/sycophancy-in-gpt-4o/), by OpenAI
+- [30 percent of some Microsoft code now written by AI](https://www.theregister.com/2025/04/30/microsoft_meta_autocoding/), by Simon Sharwood
