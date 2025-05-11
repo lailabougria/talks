@@ -25,7 +25,9 @@ In addition, you can find a list of resources to further your understanding of t
 
 - [AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking](https://www.mdpi.com/2075-4698/15/1/6)
 - [The Impact of Generative AI on Critical Thinking](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
+- [The Effects of Generative AI on High-Skilled Work](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4945566)
 - [Looking For Cognitive Bias In AI-Assisted Decision-Making](https://ceur-ws.org/Vol-3825/short1-1.pdf)
+- [How Does Narrow AI Impact Human Creativity?](https://www.tandfonline.com/doi/full/10.1080/10400419.2024.2378264#abstract)
 - [Confirmation bias in AI-assisted decision-making](https://www.sciencedirect.com/science/article/pii/S2949882124000264)
 - [Generative AI enhances individual creativity but reduces the collective diversity of novel content](https://www.science.org/doi/10.1126/sciadv.adn5290)
 - [How Does Narrow AI Impact Human Creativity?](https://www.tandfonline.com/doi/full/10.1080/10400419.2024.2378264)
