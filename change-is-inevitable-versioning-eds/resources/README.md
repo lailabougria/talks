@@ -16,8 +16,8 @@ The following articles are good further reading material connected to the sessio
 ### Public versus private events
 
 - [Data on the Outside vs. Data on the Inside](https://queue.acm.org/detail.cfm?id=3415014), by Pat Helland
-- [Internal and external events, or how to design event-driven API](https://event-driven.io/en/internal_external_events/), by Oskar Dudcyz
-- [Events should be as small as possible, right?](https://event-driven.io/en/internal_external_events/), by Oskar Dudcyz
+- [Internal and external events, or how to design event-driven API](https://event-driven.io/en/internal_external_events/), by Oskar Dudycz
+- [Events should be as small as possible, right?](https://event-driven.io/en/events_should_be_as_small_as_possible/), by Oskar Dudycz
 - [Patterns for Decoupling in Distributed Systems: Summary Event](https://verraes.net/2019/05/patterns-for-decoupling-distsys-summary-event/), by Mathias Verraes
 - [Patterns for Decoupling in Distributed Systems: Completeness Guarantee](https://verraes.net/2019/05/patterns-for-decoupling-distsys-completeness-guarantee/), by Mathias Verraes
 - [Patterns for Decoupling in Distributed Systems: Explicit Public Events](https://verraes.net/2019/05/patterns-for-decoupling-distsys-explicit-public-events/), by Mathias Verraes
