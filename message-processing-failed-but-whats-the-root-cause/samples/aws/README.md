@@ -41,13 +41,7 @@ services.AddOpenTelemetry()
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
 Relevant sources from which to collect traces and metrics should be configured. This sample collects tracing from ASP.NET Core, NServiceBus and the AWS SDK, and metrics for ASP.NET Core and NServiceBus.
-OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
-
-To collect telemetry information from NServiceBus v8, OpenTelemetry needs to be enabled on the endpoint configuration.
-
-``` c#
-endpointConfiguration.EnableOpenTelemetry();
-```
+OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry) starting from v8. From NServiceBus v10 onwards, it's enabled by default, so the endpoint emits traces and metrics without any additional configuration.
 
 This sample uses the [AWS Distro for OpenTelemetry Collector](https://aws-otel.github.io/docs/getting-started/collector).
 To start the collector, set the `AWS_ACCESS_KEY_ID`and `AWS_SECRET_ACCESS_KEY` properties in the `docker-compose.yml`-file and then run it.
@@ -63,7 +57,7 @@ To export telemetry information to the OpenTelemetry collector, the sample makes
 
 The OpenTelemetry Collector is set up to export telemetry information to [AWS X-Ray](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html) and [CloudWatch](https://docs.aws.amazon.com/cloudwatch/), as shown in the `collector-config.yml`-file in the exporters.
 
-AWS X-Ray uses a specific format for the trace-ids and [doesn't currently support](https://aws-otel.github.io/docs/getting-started/dotnet-sdk/trace-manual-instr#installation) the [W3C TraceContext trace-id standard](https://www.w3.org/TR/trace-context/#traceparent-header). To ensure AWS X-Ray can recognise the trace-id, we need to make use of the `OpenTelemetry.Contrib.Extensions.AWSXRay`-package. This package exposes an extension method called `AddXRayTraceId` that overrides the generated trace-id and replaces it with an X-Ray-compatible trace-id.
+AWS X-Ray uses a specific format for the trace-ids and [doesn't currently support](https://aws-otel.github.io/docs/getting-started/dotnet-sdk/trace-manual-instr#installation) the [W3C TraceContext trace-id standard](https://www.w3.org/TR/trace-context/#traceparent-header). To ensure AWS X-Ray can recognise the trace-id, we need to make use of the [`OpenTelemetry.Extensions.AWS`-package](https://www.nuget.org/packages/OpenTelemetry.Extensions.AWS). This package exposes an extension method called `AddXRayTraceId` that overrides the generated trace-id and replaces it with an X-Ray-compatible trace-id.
 
 **Note** that this affects all traces, independent from the locations to which you're exporting the traces.
 

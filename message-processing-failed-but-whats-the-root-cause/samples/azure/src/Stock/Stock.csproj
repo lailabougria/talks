@@ -2,25 +2,22 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Inventory</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.11.1" />
-        <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0-beta.10" />
-        <PackageReference Include="NServiceBus" Version="8.0.3" />
-        <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-        <PackageReference Include="NServiceBus.Extensions.Hosting" Version="2.0.0" />
-        <PackageReference Include="NServiceBus.Extensions.Logging" Version="2.0.0" />
-        <PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="3.1.2" />
-        <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />
-        <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
-        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
-        <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="3.0.0" />
+        <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.21.0" />
+        <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.10.0" />
+        <PackageReference Include="NServiceBus" Version="10.2.9" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+        <PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="6.5.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.19.1" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
+        <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>

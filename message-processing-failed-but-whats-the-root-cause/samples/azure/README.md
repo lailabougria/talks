@@ -36,18 +36,14 @@ services.AddOpenTelemetry()
 
 The `component-name`-placeholder should reflect the name of the component, as this will be visible in the exported information.
 
-Relevant sources from which to collect traces and metrics should be configures. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
+Relevant sources from which to collect traces and metrics should be configured. This sample collects tracing from ASP.NET Core, NServiceBus and the Azure SDK, and metrics for ASP.NET Core and NServiceBus.
 Currently, [OpenTelemetry support in the Azure SDK](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) is experimental. To enable it, ensure to enable the experimental telemetry as described in the ["Get started"-section](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/#get-started).
-OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry?version=core_8) starting from v8. For OpenTelemetry support in NServiceBus v7, there's a [community-supported package](https://github.com/jbogard/NServiceBus.Extensions.Diagnostics) available maintained by Jimmy Bogard.
-
-To collect telemetry information from NServiceBus, OpenTelemetry needs to be enabled on the endpoint configuration.
-
-``` c#
-endpointConfiguration.EnableOpenTelemetry();
-```
+OpenTelemetry support is [available in NServiceBus](https://docs.particular.net/nservicebus/operations/opentelemetry) starting from v8. From NServiceBus v10 onwards, it's enabled by default, so the endpoint emits traces and metrics without any additional configuration.
 
 In this setup, the collected traces and metrics are exported to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview), by use of the [`Azure.Monitor.OpenTelemetry.Exporter`-package](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter).
-For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
+For more information about using OpenTelemetry with Azure Monitor, visit the [Microsoft docs](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview).
+
+Traces are also exported locally using the [OpenTelemetry Protocol Exporter](https://opentelemetry.io/docs/specs/otel/protocol/exporter/) on its default endpoint (`http://localhost:4317`). [Jaeger](https://www.jaegertracing.io/) ingests OTLP natively, so you can visualize the traces locally by running `docker run --rm -p 16686:16686 -p 4317:4317 jaegertracing/jaeger:latest` and browsing to `http://localhost:16686`.
 
 ## Emitting trace information
 

@@ -13,7 +13,7 @@ processors:
   batch:
 
 exporters:
-  logging:
+  debug:
     verbosity: detailed
   awsxray:
     region: eu-west-2

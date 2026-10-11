@@ -24,11 +24,7 @@ var host = Host.CreateDefaultBuilder(args)
                                                           {
                                                               options.ConnectionString = appInsightsConnString;
                                                           })
-                                                          .AddJaegerExporter(c =>
-                                                          {
-                                                              c.AgentHost = "localhost";
-                                                              c.AgentPort = 6831;
-                                                          }))
+                                                          .AddOtlpExporter())
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
                                                           .AddAzureMonitorMetricExporter(options =>
@@ -50,25 +46,23 @@ var host = Host.CreateDefaultBuilder(args)
                        }).AddConsole()
                    );
                })
-               .UseNServiceBus(context =>
+               .ConfigureServices((_, services) =>
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
                    endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                    endpointConfiguration.UsePersistence<LearningPersistence>();
 
-                   var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
                    var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
                    if (string.IsNullOrEmpty(connectionString))
                        throw new InvalidOperationException("Please specify a connection string.");
-                   transport.ConnectionString(connectionString);
+                   endpointConfiguration.UseTransport(new AzureServiceBusTransport(connectionString, TopicTopology.Default));
 
                    endpointConfiguration.EnableInstallers();
-                   endpointConfiguration.EnableOpenTelemetry();
 
                    endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                    endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                   return endpointConfiguration;
+                   services.AddNServiceBusEndpoint(endpointConfiguration);
                }).Build();
 
 var hostEnvironment = host.Services.GetRequiredService<IHostEnvironment>();

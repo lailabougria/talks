@@ -36,11 +36,7 @@ public class Program
                                                               {
                                                                   options.ConnectionString = appInsightsConnString;
                                                               })
-                                                              .AddJaegerExporter(c =>
-                                                              {
-                                                                  c.AgentHost = "localhost";
-                                                                  c.AgentPort = 6831;
-                                                              }))
+                                                              .AddOtlpExporter())
                                .WithMetrics(metricsBuilder => metricsBuilder
                                                               .AddAspNetCoreInstrumentation()
                                                               .AddMeter("NServiceBus.Core")
@@ -63,26 +59,24 @@ public class Program
                            }).AddConsole()
                        );
                    })
-                   .UseNServiceBus(_ =>
+                   .ConfigureServices((_, services) =>
                    {
                        var endpointConfiguration = new EndpointConfiguration(EndpointName);
                        endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                        endpointConfiguration.UsePersistence<LearningPersistence>();
 
-                       var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
                        var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
                        if (string.IsNullOrEmpty(connectionString))
                            throw new InvalidOperationException("Please specify a connection string.");
-                       transport.ConnectionString(connectionString);
-                       transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Sales");
+                       var routing = endpointConfiguration.UseTransport(new AzureServiceBusTransport(connectionString, TopicTopology.Default));
+                       routing.RouteToEndpoint(typeof(PlaceOrder), "Sales");
 
                        endpointConfiguration.EnableInstallers();
-                       endpointConfiguration.EnableOpenTelemetry();
 
                        endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                        endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                       return endpointConfiguration;
+                       services.AddNServiceBusEndpoint(endpointConfiguration);
                    });
     }
 }

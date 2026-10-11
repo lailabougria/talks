@@ -2,12 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NServiceBus.Extensions.Logging;
-using NServiceBus.Logging;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using ILoggerFactory = NServiceBus.Logging.ILoggerFactory;
 
 const string EndpointName = "Stock";
 
@@ -27,11 +24,7 @@ var host = Host.CreateDefaultBuilder(args)
                                                           {
                                                               options.ConnectionString = appInsightsConnString;
                                                           })
-                                                          .AddJaegerExporter(c =>
-                                                          {
-                                                              c.AgentHost = "localhost";
-                                                              c.AgentPort = 6831;
-                                                          }))
+                                                          .AddOtlpExporter())
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
                                                           .AddAzureMonitorMetricExporter(options =>
@@ -53,29 +46,23 @@ var host = Host.CreateDefaultBuilder(args)
                        }).AddConsole()
                    );
                })
-               .UseNServiceBus(context =>
+               .ConfigureServices((_, services) =>
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
                    endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
                    endpointConfiguration.UsePersistence<LearningPersistence>();
 
-                   var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
                    var connectionString = Environment.GetEnvironmentVariable("ASB_ConnectionString");
                    if (string.IsNullOrEmpty(connectionString))
                        throw new InvalidOperationException("Please specify a connection string.");
-                   transport.ConnectionString(connectionString);
+                   endpointConfiguration.UseTransport(new AzureServiceBusTransport(connectionString, TopicTopology.Default));
 
                    endpointConfiguration.EnableInstallers();
-                   endpointConfiguration.EnableOpenTelemetry();
-
-                   var loggerFactory = LoggerFactory.Create(builder => builder.AddOpenTelemetry(_ => { }));
-                   ILoggerFactory nservicebusLoggerFactory = new ExtensionsLoggerFactory(loggerFactory);
-                   LogManager.UseFactory(nservicebusLoggerFactory);
 
                    endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                    endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                   return endpointConfiguration;
+                   services.AddNServiceBusEndpoint(endpointConfiguration);
                }).Build();
 
 
