@@ -6,7 +6,7 @@ For more information on how to use NServiceBus, check out the [quickstart](https
 This sample demonstrates how to:
 
 - Define a custom recoverability policy in NServiceBus
-- A jittered exponential back-off retry mechanism
+- Apply a jittered incremental back-off retry mechanism
 
 ## Defining a custom recoverability policy
 
@@ -14,21 +14,21 @@ The snippet code shows how to configure the default recoverability settings for 
 These are both being set because this implementation of the custom policy falls back to the default policy when it can't resolve the action to apply.
 
 ```c#
-var recoverablility = endpointConfiguration.Recoverability();
-recoverablility.Immediate(immediateRetries => immediateRetries.NumberOfRetries(0));
-recoverablility.Delayed(
+var recoverability = endpointConfiguration.Recoverability();
+recoverability.Immediate(immediateRetries => immediateRetries.NumberOfRetries(0));
+recoverability.Delayed(
    delayed =>
    {
        delayed.NumberOfRetries(4);
        delayed.TimeIncrease(TimeSpan.FromSeconds(2));
    }
 );
-recoverablility.CustomPolicy(CustomRecoverability.RandomizedIncrementalBackOff);
+recoverability.CustomPolicy(JitterRecoverability.JitteredIncrementalBackOff);
 ```
 
-## Jittered exponential back-off retry mechanism
+## Jittered incremental back-off retry mechanism
 
-This sample applies the default recoverability policy, in this case, an exponential time increase of 2 seconds based on the number of retries performed. Before returning, it will add some jitter to the delay, to avoid retries to be scheduled at the same time.
+This sample applies the default recoverability policy, in this case, a linear time increase of 2 seconds per retry performed. Before returning, it will add some jitter to the delay, to avoid retries being scheduled at the same time.
 
 > **_NOTE:_** This sample illustrates a simplified way to add Jitter. There are [sophisticated Jitter algorithms](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) available that are better fit for production environments with high throughput.
 
@@ -58,8 +58,8 @@ There's no use in retrying forever. Instead, the total elapsed time when executi
 
 #### Don't retry too many times
 
-In high throughput systems, an overly aggressive retry strategy may incur further load on an already stressed system which may adversely affect the system. In such scenario's, the system is not allowed to recover from its stressed state, resulting in a vicious  circle.
+In high throughput systems, an overly aggressive retry strategy may incur further load on an already stressed system which may adversely affect the system. In such scenarios, the system is not allowed to recover from its stressed state, resulting in a vicious circle.
 
 #### Use the Exception to optimize the retry strategy
 
-The `ErrorContext` exposes the Exception that occured when processing the message. If the type of Exception provides clear insights on the 'transientness' of an exception, e.g. HTTP 503 Service Unavailable or DBConcurrencyException, this information can be used to further optimize the retry policy.
+The `ErrorContext` exposes the Exception that occurred when processing the message. If the type of Exception provides clear insights on the 'transientness' of an exception, e.g. HTTP 503 Service Unavailable or DBConcurrencyException, this information can be used to further optimize the retry policy.
