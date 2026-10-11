@@ -3,6 +3,8 @@
 This sample showcases how to build a retry policy with a randomized back-off time when using [NServiceBus](https://docs.particular.net/). The sample uses the [NServiceBus Learning transport](https://docs.particular.net/transports/learning/) which simulates queuing infrastructure by storing all message actions in the local file system.
 For more information on how to use NServiceBus, check out the [quickstart](https://docs.particular.net/tutorials/quickstart/).
 
+There's also a [Polly sample](src/PollySample/README.md) that shows how to build retry strategies with Polly in ASP.NET Core, without messaging.
+
 This sample demonstrates how to:
 
 - Define a custom recoverability policy in NServiceBus
