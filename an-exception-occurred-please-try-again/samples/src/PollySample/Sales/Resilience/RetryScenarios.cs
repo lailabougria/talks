@@ -12,23 +12,23 @@ public static class RetryScenarios
     public const string AnyException = "any-exception";
     public const string DbConcurrency = "db-concurrency";
     public const string CombinedExceptions = "combined-exceptions";
-    public const string LogOnRetry = "log-on-retry";
-    public const string CustomWaitTime = "custom-wait-time";
+    public const string LogWithContext = "log-with-context";
     public const string ConstantBackOff = "constant-back-off";
     public const string ExponentialBackOffWithJitter = "exponential-back-off-with-jitter";
+
+    // The order being saved, which the /orders endpoint puts in the ResilienceContext
+    public static readonly ResiliencePropertyKey<string> OrderId = new("OrderId");
 
     public static readonly IReadOnlyList<RetryScenario> All =
     [
         new(AnyException, "Retry on any exception",
-            "Handles every exception. Uses the defaults: 3 retries with a constant 2 second delay."),
+            "Handles every exception, with 3 retries and a constant 2 second delay."),
         new(DbConcurrency, "Retry on DBConcurrencyException",
             "Only DBConcurrencyException is retried; any other exception fails immediately."),
         new(CombinedExceptions, "Retry on DBConcurrencyException or DbException",
             "Two exception types are handled by the same retry strategy."),
-        new(LogOnRetry, "Log on every retry",
-            "Uses the OnRetry callback to log the exception, attempt number and delay before each retry."),
-        new(CustomWaitTime, "Custom wait time",
-            "Configures the number of retries and a linear back-off: 500ms, 1s, 1.5s, 2s."),
+        new(LogWithContext, "Log with business context",
+            "Polly already logs every retry, but not which order failed. The order id is passed in the ResilienceContext, so OnRetry can log it."),
         new(ConstantBackOff, "Constant back-off",
             "Waits the same amount of time (1 second) between every retry."),
         new(ExponentialBackOffWithJitter, "Exponential back-off with jitter",
@@ -38,18 +38,22 @@ public static class RetryScenarios
     public static IServiceCollection AddRetryScenarios(this IServiceCollection services)
     {
         // 1. Retry on any exception
-        // The defaults are 3 retries, with a constant delay of 2 seconds between them.
+        // MaxRetryAttempts and Delay are set to Polly's defaults, to show what you get when you leave them out
         services.AddResiliencePipeline(AnyException, pipeline => pipeline
             .AddRetry(new RetryStrategyOptions
             {
-                ShouldHandle = new PredicateBuilder().Handle<Exception>()
+                ShouldHandle = new PredicateBuilder().Handle<Exception>(),
+                MaxRetryAttempts = 3,
+                Delay = TimeSpan.FromSeconds(2)
             }));
 
         // 2. Retry on a specific exception
         services.AddResiliencePipeline(DbConcurrency, pipeline => pipeline
             .AddRetry(new RetryStrategyOptions
             {
-                ShouldHandle = new PredicateBuilder().Handle<DBConcurrencyException>()
+                ShouldHandle = new PredicateBuilder().Handle<DBConcurrencyException>(),
+                MaxRetryAttempts = 3,
+                Delay = TimeSpan.FromSeconds(2)
             }));
 
         // 3. Handle multiple exception types the same way
@@ -58,12 +62,16 @@ public static class RetryScenarios
             {
                 ShouldHandle = new PredicateBuilder()
                     .Handle<DBConcurrencyException>()
-                    .Handle<DbException>()
+                    .Handle<DbException>(),
+                MaxRetryAttempts = 3,
+                Delay = TimeSpan.FromSeconds(2)
             }));
 
-        // 4. Log something before every retry
+        // 4. Add business context to the retry logs
+        // Polly's telemetry already logs every retry, but it doesn't know which order is being saved.
+        // The /orders endpoint stores the order id in the ResilienceContext, and OnRetry reads it back.
         // The overload with a context gives access to the service provider, so we can resolve a logger.
-        services.AddResiliencePipeline(LogOnRetry, (pipeline, context) =>
+        services.AddResiliencePipeline(LogWithContext, (pipeline, context) =>
         {
             var logger = context.ServiceProvider.GetRequiredService<ILogger<RetryScenario>>();
 
@@ -73,8 +81,9 @@ public static class RetryScenarios
                 Delay = TimeSpan.FromSeconds(1),
                 OnRetry = args =>
                 {
-                    logger.LogWarning(args.Outcome.Exception,
-                        "Attempt {AttemptNumber} failed. Retrying in {RetryDelay}",
+                    logger.LogInformation(args.Outcome.Exception,
+                        "Saving order {OrderId} failed on attempt {AttemptNumber}. Retrying in {RetryDelay}",
+                        args.Context.Properties.GetValue(OrderId, "unknown"),
                         args.AttemptNumber + 1,
                         args.RetryDelay);
                     return ValueTask.CompletedTask;
@@ -82,17 +91,7 @@ public static class RetryScenarios
             });
         });
 
-        // 5. Configure the number of retries and the wait time between them
-        services.AddResiliencePipeline(CustomWaitTime, pipeline => pipeline
-            .AddRetry(new RetryStrategyOptions
-            {
-                ShouldHandle = new PredicateBuilder().Handle<Exception>(),
-                MaxRetryAttempts = 4,
-                Delay = TimeSpan.FromMilliseconds(500),
-                BackoffType = DelayBackoffType.Linear
-            }));
-
-        // 6. Constant back-off: the same delay between every retry
+        // 5. Constant back-off: the same delay between every retry
         services.AddResiliencePipeline(ConstantBackOff, pipeline => pipeline
             .AddRetry(new RetryStrategyOptions
             {
@@ -102,7 +101,7 @@ public static class RetryScenarios
                 BackoffType = DelayBackoffType.Constant
             }));
 
-        // 7. Exponential back-off with jitter
+        // 6. Exponential back-off with jitter
         // With an exponential back-off, UseJitter uses the "decorrelated jitter" algorithm,
         // which originated in Polly.Contrib.WaitAndRetry and is now built into Polly.
         services.AddResiliencePipeline(ExponentialBackOffWithJitter, pipeline => pipeline

@@ -12,11 +12,10 @@ The page will show each attempt, how long Polly waited before it, and the outcom
 
 | Scenario | What it shows |
 | --- | --- |
-| `any-exception` | Retry on any exception, using the defaults (3 retries, constant 2 second delay) |
+| `any-exception` | Retry on any exception, with 3 retries and a constant 2 second delay (Polly's defaults) |
 | `db-concurrency` | Retry only on `DBConcurrencyException`; other exceptions fail immediately |
 | `combined-exceptions` | Handle `DBConcurrencyException` and `DbException` with the same retry strategy |
-| `log-on-retry` | Log the exception, attempt number and delay using the `OnRetry` callback |
-| `custom-wait-time` | Configure the number of retries and the delay, using a linear back-off |
+| `log-with-context` | Pass the order id through a `ResilienceContext`, so the `OnRetry` callback can log which order is being retried |
 | `constant-back-off` | The same delay between every retry |
 | `exponential-back-off-with-jitter` | An exponential back-off with jitter |
 
@@ -28,7 +27,9 @@ services.AddResiliencePipeline("combined-exceptions", pipeline => pipeline
     {
         ShouldHandle = new PredicateBuilder()
             .Handle<DBConcurrencyException>()
-            .Handle<DbException>()
+            .Handle<DbException>(),
+        MaxRetryAttempts = 3,
+        Delay = TimeSpan.FromSeconds(2)
     }));
 ```
 
@@ -39,7 +40,61 @@ var pipeline = pipelineProvider.GetPipeline("combined-exceptions");
 await pipeline.ExecuteAsync(async token => await repository.Save(order, token), cancellationToken);
 ```
 
-> **_NOTE:_** Pipelines registered through `AddResiliencePipeline` automatically emit telemetry. That's why the Sales console also logs a Polly warning for every failed attempt, regardless of the scenario. The `log-on-retry` scenario shows how to add your own logging on top of that.
+### Logging and telemetry
+
+Pipelines registered through `AddResiliencePipeline` automatically emit telemetry, so Polly already logs every failed attempt and every retry, regardless of the scenario. There's no need to log that yourself. Two things are worth adding, though.
+
+**Business context.** Polly doesn't know which order it's retrying. A `ResilienceContext` carries data through the pipeline, so callbacks such as `OnRetry` can read it:
+
+```c#
+var context = ResilienceContextPool.Shared.Get(cancellationToken);
+context.Properties.Set(RetryScenarios.OrderId, orderId);
+try
+{
+    await pipeline.ExecuteAsync(async context => await repository.Save(order, context.CancellationToken), context);
+}
+finally
+{
+    ResilienceContextPool.Shared.Return(context);
+}
+```
+
+And in the `log-with-context` scenario:
+
+```c#
+OnRetry = args =>
+{
+    logger.LogInformation(args.Outcome.Exception, "Saving order {OrderId} failed on attempt {AttemptNumber}. Retrying in {RetryDelay}",
+        args.Context.Properties.GetValue(OrderId, "unknown"), args.AttemptNumber + 1, args.RetryDelay);
+    return ValueTask.CompletedTask;
+}
+```
+
+Use the `ResilienceContext` that Polly passes to the callback, including its `CancellationToken`, rather than capturing the outer one. That way, cancellation from strategies such as timeouts reaches your code.
+
+**Log levels.** By default, Polly logs every failed attempt and retry as a warning, and the attempt that fails after all retries are exhausted as an error. A few failures that get retried are expected, so Sales logs the first two as information and only warns from the third failed attempt onwards. With 4 retries that all fail, you'll see `info`, `info`, `warn`, `warn` and then `error`.
+
+Polly lets you change the severity of its telemetry events through a `SeverityProvider`, but it doesn't pass the attempt number. Sales therefore counts the failed attempts of each execution in the `ResilienceContext` (see `Sales/Resilience/RetryLogLevels.cs`):
+
+```c#
+builder.Services.Configure<TelemetryOptions>(options => options.SeverityProvider = args =>
+{
+    if (args.Event.EventName is not ("ExecutionAttempt" or "OnRetry")
+        || args.Event.Severity != ResilienceEventSeverity.Warning)
+    {
+        return args.Event.Severity;
+    }
+
+    var failedAttempts = args.Context.Properties.GetValue(FailedAttempts, 0);
+    if (args.Event.EventName == "ExecutionAttempt")
+    {
+        failedAttempts++;
+        args.Context.Properties.Set(FailedAttempts, failedAttempts);
+    }
+
+    return failedAttempts < WarnFromAttempt ? ResilienceEventSeverity.Information : ResilienceEventSeverity.Warning;
+});
+```
 
 ### Jitter
 

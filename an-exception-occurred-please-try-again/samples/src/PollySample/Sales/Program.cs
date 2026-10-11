@@ -8,6 +8,7 @@ using Sales.Resilience;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRetryScenarios();
+builder.Services.AddRetryLogLevels();
 builder.Services.AddSingleton<OrderRepository>();
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -28,15 +29,20 @@ app.MapPost("/orders", async (
     var attempts = new List<AttemptResult>();
     var stopwatch = Stopwatch.StartNew();
 
+    // A ResilienceContext carries data through the pipeline, so strategy callbacks like OnRetry can read it
+    // Adding the orderid allows us to propragate important context
+    var resilienceContext = ResilienceContextPool.Shared.Get(cancellationToken);
+    resilienceContext.Properties.Set(RetryScenarios.OrderId, orderId);
+
     try
     {
-        await pipeline.ExecuteAsync(async token =>
+        await pipeline.ExecuteAsync(async context =>
         {
             var attempt = attempts.Count + 1;
             var startedAt = stopwatch.Elapsed;
             try
             {
-                await repository.Save(orderId, request.Failure, attempt, token);
+                await repository.Save(orderId, request.Failure, attempt, context.CancellationToken);
                 attempts.Add(new AttemptResult(attempt, startedAt, null));
             }
             catch (Exception exception)
@@ -44,7 +50,7 @@ app.MapPost("/orders", async (
                 attempts.Add(new AttemptResult(attempt, startedAt, $"{exception.GetType().Name}: {exception.Message}"));
                 throw;
             }
-        }, cancellationToken);
+        }, resilienceContext);
 
         return new PlaceOrderResponse(orderId, request.Scenario, Succeeded: true, attempts);
     }
@@ -53,6 +59,10 @@ app.MapPost("/orders", async (
         // Either the exception isn't handled by the scenario, or all retries were exhausted.
         // We return the attempts instead of an error, so the UI can show what happened.
         return new PlaceOrderResponse(orderId, request.Scenario, Succeeded: false, attempts);
+    }
+    finally
+    {
+        ResilienceContextPool.Shared.Return(resilienceContext);
     }
 });
 
