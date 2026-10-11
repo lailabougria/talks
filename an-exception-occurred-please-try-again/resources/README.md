@@ -11,18 +11,18 @@ Here you can find a list of resources to further your understanding of these top
 ## About exceptions
 
 - [But, all my errors are severe, by David Boike, Particular Software](https://particular.net/blog/but-all-my-errors-are-severe)
-- [Transient fault guidance, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/best-practices/transient-faults)
-- [Rate limiting pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern)
-- [Throttling, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/throttling)
+- [Transient fault guidance, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/best-practices/transient-faults)
+- [Rate limiting pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/rate-limiting-pattern)
+- [Throttling, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/throttling)
 
 ## Resilience patterns
 
 The following resources document several resilience patterns that can be applied in software. Each provides its own value, and ideally, multiple resilience patterns are applied to software simultaneously. 
 
-- [Async request-reply, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
-- [Publish-subscribe, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber)
-- [Retry pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/retry)
-- [Circuit breaker pattern, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
+- [Async request-reply, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply)
+- [Publish-subscribe, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber)
+- [Retry pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry)
+- [Circuit breaker pattern, Microsoft docs](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
 - [Avoiding fallback in distributed systems, AWS](https://aws.amazon.com/builders-library/avoiding-fallback-in-distributed-systems/)
 - [Timeouts, retries and backoff with Jitter, AWS](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
 - [Exponential backoff and jitter, AWS](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
@@ -31,13 +31,15 @@ The following resources document several resilience patterns that can be applied
 
 ### Polly
 
-- [Polly](http://www.thepollyproject.org/)
-- [Polly GitHub repo](https://github.com/App-vNext/Polly#resilience-policies)
-- [Polly WaitAndRetry Contrib](https://github.com/Polly-Contrib/Polly.Contrib.WaitAndRetry)
+- [Polly](https://thepollyproject.org/)
+- [Polly documentation](https://www.pollydocs.org/)
+- [Polly GitHub repo](https://github.com/App-vNext/Polly#resilience-strategies)
+- [Retry strategy (incl. built-in jitter), Polly docs](https://www.pollydocs.org/strategies/retry.html)
+- [Building resilient HTTP apps with Microsoft.Extensions.Http.Resilience, Microsoft docs](https://learn.microsoft.com/en-us/dotnet/core/resilience/http-resilience)
 
 ### NServiceBus
 
-- [NServiceBus quickstart](https://docs.particular.net/tutorials/quickstart)
+- [NServiceBus quickstart](https://docs.particular.net/tutorials/quickstart/)
 - [NServiceBus recoverability](https://docs.particular.net/nservicebus/recoverability/)
 - [NServiceBus Outbox](https://docs.particular.net/nservicebus/outbox/)
 - [NServiceBus transactional session](https://docs.particular.net/nservicebus/transactional-session/)
@@ -45,6 +47,6 @@ The following resources document several resilience patterns that can be applied
 ### Messaging services in the Azure Stack
 
 - [Overview of available messaging services on Azure, Microsoft docs](https://azure.microsoft.com/en-us/solutions/messaging-services/#products)
-- [Azure Storage Queues vs Azure Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-azure-and-service-bus-queues-compared-contrasted)
-- [Event Grid vs Event Hubs vs and Service Bus, Microsoft docs](https://docs.microsoft.com/en-us/azure/event-grid/compare-messaging-services)
-- [List of retry capabilities per Azure service, Microsoft docs](https://docs.microsoft.com/en-us/azure/architecture/best-practices/retry-service-specific)
+- [Azure Storage Queues vs Azure Service Bus, Microsoft docs](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-azure-and-service-bus-queues-compared-contrasted)
+- [Event Grid vs Event Hubs vs Service Bus, Microsoft docs](https://learn.microsoft.com/en-us/azure/service-bus-messaging/compare-messaging-services)
+- [Reliability in Azure, Microsoft docs](https://learn.microsoft.com/en-us/azure/reliability/overview)
