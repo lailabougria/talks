@@ -1,8 +1,6 @@
 ﻿using NServiceBus;
-using NServiceBus.Logging;
 using NServiceBus.Transport;
 using System;
-using System.Collections.Generic;
 
 namespace Sales
 {
