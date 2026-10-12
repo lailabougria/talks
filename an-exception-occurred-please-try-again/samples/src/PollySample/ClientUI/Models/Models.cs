@@ -10,7 +10,7 @@ public enum ExceptionType
     Timeout
 }
 
-public record PlaceOrderResponse(string OrderId, string Scenario, bool Succeeded, List<AttemptResult> Attempts);
+public record OrderResult(string OrderId, string Scenario, bool Succeeded, List<AttemptResult> Attempts);
 
 public record AttemptResult(int Attempt, TimeSpan StartedAt, string? Error);
 
@@ -23,7 +23,11 @@ public class HomeViewModel
     public string? Scenario { get; init; }
     public ExceptionType Exception { get; init; }
     public int Failures { get; init; } = 2;
-    public PlaceOrderResponse? Result { get; init; }
+    public OrderResult? Result { get; init; }
+
+    public int Conflicts { get; init; } = 2;
+    public string? CancelledOrderId { get; init; }
+    public bool Cancelled { get; init; }
 
     public int HttpFailures { get; init; } = 2;
     public FlakyOrderResponse? HttpResult { get; init; }

@@ -62,25 +62,44 @@
                 @(result.Succeeded ? "stored" : "failed")
                 after @result.Attempts.Count attempt(s)
             </h3>
-            <p>Scenario: <code>@result.Scenario</code>. Watch the Sales console for the log output.</p>
-            <table class="table table-sm">
-                <thead>
-                    <tr><th>Attempt</th><th>Started at</th><th>Waited before attempt</th><th>Outcome</th></tr>
-                </thead>
-                <tbody>
-                    @{ TimeSpan? previous = null; }
-                    @foreach (var attempt in result.Attempts)
-                    {
-                        <tr class="@(attempt.Error is null ? "table-success" : "table-danger")">
-                            <td>@attempt.Attempt</td>
-                            <td>@attempt.StartedAt.TotalMilliseconds.ToString("N0", CultureInfo.InvariantCulture) ms</td>
-                            <td>@(previous is null ? "-" : (attempt.StartedAt - previous.Value).TotalMilliseconds.ToString("N0", CultureInfo.InvariantCulture) + " ms")</td>
-                            <td>@(attempt.Error ?? "Succeeded")</td>
-                        </tr>
-                        previous = attempt.StartedAt;
-                    }
-                </tbody>
-            </table>
+            <p>Scenario: <code>@result.Scenario</code>, resolved by name. Watch the Sales console for the log output.</p>
+            <partial name="_Attempts" model="result.Attempts" />
+            @if (result.Succeeded)
+            {
+                <p>
+                    Cancelling the order updates it through the <code>db-concurrency</code> pipeline, which is injected into
+                    <code>Orders</code> instead of resolved by name. It only retries <code>DBConcurrencyException</code>.
+                </p>
+                <form action="/cancel-order" method="POST" class="form-inline">
+                    <input type="hidden" name="orderId" value="@result.OrderId" />
+                    <label class="mr-2" for="conflicts">Number of concurrency conflicts</label>
+                    <input class="form-control mr-2" type="number" id="conflicts" name="conflicts" min="0" max="10" value="@Model.Conflicts" />
+                    <input type="submit" class="btn btn-danger" value="Cancel order &raquo;" />
+                </form>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.CancelledOrderId is { } cancelledOrderId)
+{
+    <div class="card mb-4 @(Model.Cancelled ? "border-success" : "border-danger")">
+        <div class="card-body">
+            <h3 class="card-title">
+                Order <code>@cancelledOrderId</code>
+                @(Model.Cancelled ? "cancelled" : "not cancelled")
+            </h3>
+            <p>
+                @if (Model.Cancelled)
+                {
+                    @:The <code>db-concurrency</code> pipeline retried the concurrency conflicts until the update succeeded.
+                }
+                else
+                {
+                    @:The update still conflicted after all retries, so Sales responded with <code>409 Conflict</code>. ClientUI doesn't retry that, since it isn't a transient error.
+                }
+                Cancelling doesn't keep track of its attempts, to keep the code as simple as possible. Watch the Sales console for the log output.
+            </p>
         </div>
     </div>
 }

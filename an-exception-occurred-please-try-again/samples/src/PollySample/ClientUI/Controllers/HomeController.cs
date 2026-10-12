@@ -25,6 +25,20 @@ public class HomeController(SalesClient sales) : Controller
         });
     }
 
+    [HttpPost("cancel-order")]
+    public async Task<IActionResult> CancelOrder(string orderId, int conflicts, CancellationToken cancellationToken)
+    {
+        var cancelled = await sales.CancelOrder(orderId, conflicts, cancellationToken);
+
+        return View(nameof(Index), new HomeViewModel
+        {
+            Scenarios = await sales.GetScenarios(cancellationToken),
+            Conflicts = conflicts,
+            CancelledOrderId = orderId,
+            Cancelled = cancelled
+        });
+    }
+
     [HttpPost("place-flaky-order")]
     public async Task<IActionResult> PlaceFlakyOrder(int httpFailures, CancellationToken cancellationToken)
     {

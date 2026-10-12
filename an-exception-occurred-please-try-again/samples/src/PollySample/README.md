@@ -6,7 +6,7 @@ This sample showcases how to build retry strategies with [Polly](https://www.pol
 - **Sales** (http://localhost:5091): an ASP.NET Core backend that stores orders in a simulated database, which fails a configurable number of times with a configurable exception.
 
 Start both projects, browse to http://localhost:5090, pick a retry scenario and the failure to simulate, and place an order. 
-The page will show each attempt, how long Polly waited before it, and the outcome.
+The page will show each attempt, how long Polly waited before it, and the outcome. Once the order is stored, you can cancel it and simulate concurrency conflicts while doing so.
 
 ## Retry scenarios in Sales
 
@@ -33,12 +33,36 @@ services.AddResiliencePipeline("combined-exceptions", pipeline => pipeline
     }));
 ```
 
-And using it:
+### Resolving or injecting a pipeline
+
+All order logic in Sales lives in `Sales/Orders.cs`, which shows both ways to get hold of a pipeline.
+
+Placing an order resolves the pipeline by name through `ResiliencePipelineProvider<string>`, because the UI picks the scenario at runtime:
 
 ```c#
-var pipeline = pipelineProvider.GetPipeline("combined-exceptions");
-await pipeline.ExecuteAsync(async token => await repository.Save(order, token), cancellationToken);
+public class Orders(ResiliencePipelineProvider<string> pipelines, ...)
+{
+    public async Task PlaceOrder(string scenario, Order order, CancellationToken cancellationToken)
+    {
+        var pipeline = pipelines.GetPipeline(scenario);
+        await pipeline.ExecuteAsync(async token => await Save(order, token), cancellationToken);
+    }
+}
 ```
+
+Usually you know which pipeline you need, so you can inject it directly. `AddResiliencePipeline` also registers every pipeline as a keyed service, using its name as the key. Cancelling an order works that way, using the `db-concurrency` pipeline:
+
+```c#
+public class Orders([FromKeyedServices("db-concurrency")] ResiliencePipeline cancelPipeline, ...)
+{
+    public async Task Cancel(string orderId, CancellationToken cancellationToken) =>
+        await cancelPipeline.ExecuteAsync(async token => await MarkAsCancelled(orderId, token), cancellationToken);
+}
+```
+
+That's all it takes: when all retries are exhausted, the last exception is thrown to the caller. `PlaceOrder` does more work, because it records every attempt so the UI can show what happened. The cancel endpoint maps a `DBConcurrencyException` that's still thrown after all retries to a `409 Conflict`. That isn't a transient HTTP error, so ClientUI's resilience handler doesn't retry it, which would start a new round of retries in Sales.
+
+Unlike the HTTP resilience handler in ClientUI, Polly doesn't intercept your code: you decide which operations go through a pipeline by calling `ExecuteAsync`. To keep that out of your business logic, wrap the dependency in a decorator (for example a `ResilientOrderRepository`) that calls the inner one through the pipeline.
 
 ### Logging and telemetry
 
@@ -51,7 +75,7 @@ var context = ResilienceContextPool.Shared.Get(cancellationToken);
 context.Properties.Set(RetryScenarios.OrderId, orderId);
 try
 {
-    await pipeline.ExecuteAsync(async context => await repository.Save(order, context.CancellationToken), context);
+    await pipeline.ExecuteAsync(async context => await Save(order, context.CancellationToken), context);
 }
 finally
 {
