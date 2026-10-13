@@ -1,0 +1,20 @@
+@model IReadOnlyList<AttemptResult>
+
+<table class="table table-sm">
+    <thead>
+        <tr><th>Attempt</th><th>Started at</th><th>Waited before attempt</th><th>Outcome</th></tr>
+    </thead>
+    <tbody>
+        @{ TimeSpan? previous = null; }
+        @foreach (var attempt in Model)
+        {
+            <tr class="@(attempt.Error is null ? "table-success" : "table-danger")">
+                <td>@attempt.Attempt</td>
+                <td>@attempt.StartedAt.TotalMilliseconds.ToString("N0", CultureInfo.InvariantCulture) ms</td>
+                <td>@(previous is null ? "-" : (attempt.StartedAt - previous.Value).TotalMilliseconds.ToString("N0", CultureInfo.InvariantCulture) + " ms")</td>
+                <td>@(attempt.Error ?? "Succeeded")</td>
+            </tr>
+            previous = attempt.StartedAt;
+        }
+    </tbody>
+</table>

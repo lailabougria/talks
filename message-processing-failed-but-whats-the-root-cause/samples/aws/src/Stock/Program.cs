@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
-using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Extensions.AWS.Trace;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -32,12 +32,7 @@ var host = Host.CreateDefaultBuilder(args)
                                                               options.Endpoint = otlpExporterEndpoint;
                                                               options.ExportProcessorType = ExportProcessorType.Simple;
                                                           })
-                                                          .AddConsoleExporter()
-                                                          .AddJaegerExporter(c =>
-                                                          {
-                                                              c.AgentHost = "localhost";
-                                                              c.AgentPort = 6831;
-                                                          }))
+                                                          .AddConsoleExporter())
                            .WithMetrics(metricsBuilder => metricsBuilder
                                                           .AddMeter("NServiceBus.Core")
                                                           .AddOtlpExporter(options =>
@@ -62,7 +57,7 @@ var host = Host.CreateDefaultBuilder(args)
                        }).AddConsole()
                    );
                })
-               .UseNServiceBus(context =>
+               .ConfigureServices((_, services) =>
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
                    endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
@@ -70,14 +65,13 @@ var host = Host.CreateDefaultBuilder(args)
 
                    // Ensure environment variables contain AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_REGION
                    // Reference: https://docs.particular.net/transports/sqs/#configuration
-                   endpointConfiguration.UseTransport<SqsTransport>();
+                   endpointConfiguration.UseTransport(new SqsTransport());
                    endpointConfiguration.EnableInstallers();
-                   endpointConfiguration.EnableOpenTelemetry();
 
                    endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                    endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                   return endpointConfiguration;
+                   services.AddNServiceBusEndpoint(endpointConfiguration);
                })
                .Build();
 

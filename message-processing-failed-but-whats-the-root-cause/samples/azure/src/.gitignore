@@ -1,0 +1,2 @@
+# Local launch settings contain connection strings; never commit them
+**/Properties/launchSettings.json

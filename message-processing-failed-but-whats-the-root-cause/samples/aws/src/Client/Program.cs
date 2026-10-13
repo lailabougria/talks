@@ -1,6 +1,6 @@
 using Commands;
 using OpenTelemetry;
-using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Extensions.AWS.Trace;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -42,12 +42,7 @@ public class Program
                                                                   options.ExportProcessorType = ExportProcessorType.Simple;
                                                                   options.Endpoint = otlpExporterEndpoint;
                                                               })
-                                                              .AddConsoleExporter()
-                                                              .AddJaegerExporter(c =>
-                                                              {
-                                                                  c.AgentHost = "localhost";
-                                                                  c.AgentPort = 6831;
-                                                              }))
+                                                              .AddConsoleExporter())
                                .WithMetrics(metricsBuilder => metricsBuilder
                                                               .AddAspNetCoreInstrumentation()
                                                               .AddMeter("NServiceBus.Core")
@@ -71,7 +66,7 @@ public class Program
                            }).AddConsole()
                        );
                    })
-                   .UseNServiceBus(_ =>
+                   .ConfigureServices((_, services) =>
                    {
                        var endpointConfiguration = new EndpointConfiguration(EndpointName);
                        endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
@@ -79,16 +74,15 @@ public class Program
 
                        // Ensure environment variables contain AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_REGION
                        // Reference: https://docs.particular.net/transports/sqs/#configuration
-                       var transport = endpointConfiguration.UseTransport<SqsTransport>();
-                       transport.Routing().RouteToEndpoint(typeof(PlaceOrder), "Sales");
+                       var routing = endpointConfiguration.UseTransport(new SqsTransport());
+                       routing.RouteToEndpoint(typeof(PlaceOrder), "Sales");
 
                        endpointConfiguration.EnableInstallers();
-                       endpointConfiguration.EnableOpenTelemetry();
 
                        endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                        endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                       return endpointConfiguration;
+                       services.AddNServiceBusEndpoint(endpointConfiguration);
                    });
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
-using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Extensions.AWS.Trace;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -57,7 +57,7 @@ var host = Host.CreateDefaultBuilder(args)
                        }).AddConsole()
                    );
                })
-               .UseNServiceBus(context =>
+               .ConfigureServices((_, services) =>
                {
                    var endpointConfiguration = new EndpointConfiguration(EndpointName);
                    endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
@@ -65,17 +65,15 @@ var host = Host.CreateDefaultBuilder(args)
 
                    // Ensure environment variables contain AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_REGION
                    // Reference: https://docs.particular.net/transports/sqs/#configuration
-                   var transport = endpointConfiguration.UseTransport<SqsTransport>();
-                   transport.Routing()
-                       .RouteToEndpoint(typeof(ChargeOrder), "Payments");
+                   var routing = endpointConfiguration.UseTransport(new SqsTransport());
+                   routing.RouteToEndpoint(typeof(ChargeOrder), "Payments");
                    
                    endpointConfiguration.EnableInstallers();
-                   endpointConfiguration.EnableOpenTelemetry();
 
                    endpointConfiguration.Recoverability().Immediate(immediate => immediate.NumberOfRetries(0));
                    endpointConfiguration.Recoverability().Delayed(delayed => delayed.NumberOfRetries(3));
 
-                   return endpointConfiguration;
+                   services.AddNServiceBusEndpoint(endpointConfiguration);
                })
                .Build();
 

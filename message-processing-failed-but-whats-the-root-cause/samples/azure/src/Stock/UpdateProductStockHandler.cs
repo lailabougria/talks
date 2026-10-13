@@ -13,7 +13,6 @@ public class UpdateProductStockHandler : IHandleMessages<UpdateProductStock>
     public Task Handle(UpdateProductStock message, IMessageHandlerContext context)
     {
         using Activity? activity = source.StartActivity("Stock_UpdateProductStock");
-        var random = new Random(4);
 
         try 
         {
@@ -24,7 +23,7 @@ public class UpdateProductStockHandler : IHandleMessages<UpdateProductStock>
 
             // update stock
             // Introduces a transient exception to see how failed traces look like
-            if (random.Next() % 2 == 0)
+            if (Random.Shared.Next(0, 2) == 0)
             {
                 throw new Exception("Some transient exception");
             }

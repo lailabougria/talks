@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Brings in Polly.Core and Polly.Extensions, and adds AddResiliencePipeline to IServiceCollection -->
+    <PackageReference Include="Microsoft.Extensions.Resilience" Version="10.10.0" />
+  </ItemGroup>
+
+</Project>

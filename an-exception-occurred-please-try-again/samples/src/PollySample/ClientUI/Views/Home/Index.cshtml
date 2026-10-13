@@ -1,0 +1,129 @@
+@model HomeViewModel
+@{
+    ViewBag.Title = "Polly retries";
+}
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="card my-4">
+            <div class="card-body">
+                <h2 class="card-title">Retries in Sales</h2>
+                <p class="card-text">Sales stores the order using a Polly resilience pipeline. Pick a retry scenario and the failure the database should simulate.</p>
+                <form action="/place-order" method="POST">
+                    <div class="form-group">
+                        <label for="scenario">Retry scenario</label>
+                        <select class="form-control" id="scenario" name="scenario">
+                            @foreach (var scenario in Model.Scenarios)
+                            {
+                                <option value="@scenario.Name" selected="@(scenario.Name == Model.Scenario)">@scenario.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exception">Exception thrown by the database</label>
+                        <select class="form-control" id="exception" name="exception">
+                            <option value="Generic" selected="@(Model.Exception == ExceptionType.Generic)">InvalidOperationException</option>
+                            <option value="Concurrency" selected="@(Model.Exception == ExceptionType.Concurrency)">DBConcurrencyException</option>
+                            <option value="Database" selected="@(Model.Exception == ExceptionType.Database)">DbException</option>
+                            <option value="Timeout" selected="@(Model.Exception == ExceptionType.Timeout)">TimeoutException</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="failures">Number of times the database fails</label>
+                        <input class="form-control" type="number" id="failures" name="failures" min="0" max="10" value="@Model.Failures" />
+                    </div>
+                    <input type="submit" class="btn btn-lg btn-success" value="Place order &raquo;" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card my-4">
+            <div class="card-body">
+                <h3 class="card-title">Scenarios</h3>
+                <dl>
+                    @foreach (var scenario in Model.Scenarios)
+                    {
+                        <dt>@scenario.Title <code>@scenario.Name</code></dt>
+                        <dd>@scenario.Description</dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Result is { } result)
+{
+    <div class="card mb-4 @(result.Succeeded ? "border-success" : "border-danger")">
+        <div class="card-body">
+            <h3 class="card-title">
+                Order <code>@result.OrderId</code>
+                @(result.Succeeded ? "stored" : "failed")
+                after @result.Attempts.Count attempt(s)
+            </h3>
+            <p>Scenario: <code>@result.Scenario</code>, resolved by name. Watch the Sales console for the log output.</p>
+            <partial name="_Attempts" model="result.Attempts" />
+            @if (result.Succeeded)
+            {
+                <p>
+                    Cancelling the order updates it through the <code>db-concurrency</code> pipeline, which is injected into
+                    <code>Orders</code> instead of resolved by name. It only retries <code>DBConcurrencyException</code>.
+                </p>
+                <form action="/cancel-order" method="POST" class="form-inline">
+                    <input type="hidden" name="orderId" value="@result.OrderId" />
+                    <label class="mr-2" for="conflicts">Number of concurrency conflicts</label>
+                    <input class="form-control mr-2" type="number" id="conflicts" name="conflicts" min="0" max="10" value="@Model.Conflicts" />
+                    <input type="submit" class="btn btn-danger" value="Cancel order &raquo;" />
+                </form>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.CancelledOrderId is { } cancelledOrderId)
+{
+    <div class="card mb-4 @(Model.Cancelled ? "border-success" : "border-danger")">
+        <div class="card-body">
+            <h3 class="card-title">
+                Order <code>@cancelledOrderId</code>
+                @(Model.Cancelled ? "cancelled" : "not cancelled")
+            </h3>
+            <p>
+                @if (Model.Cancelled)
+                {
+                    @:The <code>db-concurrency</code> pipeline retried the concurrency conflicts until the update succeeded.
+                }
+                else
+                {
+                    @:The update still conflicted after all retries, so Sales responded with <code>409 Conflict</code>. ClientUI doesn't retry that, since it isn't a transient error.
+                }
+                Cancelling doesn't keep track of its attempts, to keep the code as simple as possible. Watch the Sales console for the log output.
+            </p>
+        </div>
+    </div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title">HTTP retries in ClientUI</h2>
+        <p class="card-text">
+            The <code>HttpClient</code> that ClientUI uses to call Sales has the standard resilience handler from
+            <code>Microsoft.Extensions.Http.Resilience</code>. Sales responds with <code>503 Service Unavailable</code>
+            the first few times, and the handler retries up to 3 times with an exponential back-off and jitter.
+        </p>
+        <form action="/place-flaky-order" method="POST" class="form-inline">
+            <label class="mr-2" for="httpFailures">Number of 503 responses</label>
+            <input class="form-control mr-2" type="number" id="httpFailures" name="httpFailures" min="0" max="10" value="@Model.HttpFailures" />
+            <input type="submit" class="btn btn-success" value="Call Sales &raquo;" />
+        </form>
+        @if (Model.HttpResult is { } httpResult)
+        {
+            <p class="mt-3 text-success">Succeeded. Sales received @httpResult.AttemptsReceived request(s) for this call.</p>
+        }
+        @if (Model.HttpError is { } httpError)
+        {
+            <p class="mt-3 text-danger">Failed after all retries were exhausted: @httpError</p>
+        }
+    </div>
+</div>
