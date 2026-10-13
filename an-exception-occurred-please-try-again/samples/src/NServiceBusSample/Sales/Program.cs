@@ -23,7 +23,7 @@ namespace Sales
             // So that when we test recoverability, we don't have to wait so long
             // for the failed message to be sent to the error queue
             var recoverability = endpointConfiguration.Recoverability();
-            recoverability.Immediate(immediateRetries => immediateRetries.NumberOfRetries(0));
+            recoverability.Immediate(immediateRetries => immediateRetries.NumberOfRetries(1));
             recoverability.Delayed(
                 delayed =>
                 {
@@ -31,6 +31,7 @@ namespace Sales
                     delayed.TimeIncrease(TimeSpan.FromSeconds(2));
                 }
             );
+            recoverability.AddUnrecoverableException<NotImplementedException>();
             recoverability.CustomPolicy(JitterRecoverability.JitteredIncrementalBackOff);
 
             builder.Services.AddNServiceBusEndpoint(endpointConfiguration);
