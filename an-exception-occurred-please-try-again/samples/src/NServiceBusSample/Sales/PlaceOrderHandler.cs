@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Messages;
 using NServiceBus;
 using NServiceBus.Logging;
+using Sales.Data;
 
 namespace Sales
 {
@@ -11,17 +12,19 @@ namespace Sales
         static readonly ILog log = LogManager.GetLogger<PlaceOrderHandler>();
         static readonly Random random = new Random();
 
-        public Task Handle(PlaceOrder message, IMessageHandlerContext context)
+        private readonly SalesDataContext _dataContext;
+
+        public PlaceOrderHandler(SalesDataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
+        public async Task Handle(PlaceOrder message, IMessageHandlerContext context)
         {
             log.Info($"Received PlaceOrder, OrderId = {message.OrderId}");
 
-            // This is normally where some business logic would occur
-
-            // Throw transient exceptions
-            if (random.Next(0, 1) == 0)
-            {
-                throw new Exception("Oops");
-            }
+            // Saved in the same transaction as the outgoing OrderPlaced event, when the handler completes
+            _dataContext.Orders.Add(new Order { OrderId = message.OrderId, ReceivedAt = DateTimeOffset.UtcNow });
 
             var orderPlaced = new OrderPlaced
             {
@@ -30,7 +33,7 @@ namespace Sales
 
             log.Info($"Publishing OrderPlaced, OrderId = {message.OrderId}");
 
-            return context.Publish(orderPlaced);
+            await context.Publish(orderPlaced);
         }
     }
 }

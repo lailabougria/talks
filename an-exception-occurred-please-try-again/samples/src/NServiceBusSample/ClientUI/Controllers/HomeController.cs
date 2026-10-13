@@ -43,8 +43,6 @@ namespace ClientUI.Controllers
             string orderId = Guid.NewGuid().ToString().Substring(0, 8);
 
             // Retry the whole unit of work: open, send and commit.
-            // A transactional session can only be opened once, and it's registered as a scoped service,
-            // so every attempt gets its own DI scope, and with it a fresh session.
             await _sendPipeline.ExecuteAsync(async ct =>
                 {
                     await using var scope = _scopeFactory.CreateAsyncScope();
